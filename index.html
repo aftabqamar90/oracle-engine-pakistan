@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OracleEngine Pakistan</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#07090f;color:#e2e8f0;font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,212,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,.025) 1px,transparent 1px);background-size:44px 44px;pointer-events:none;z-index:0}
+.wrap{max-width:1400px;margin:0 auto;padding:0 20px;position:relative;z-index:1}
+/* HEADER */
+.hdr{padding:36px 0 28px;border-bottom:1px solid #1a2535;margin-bottom:32px}
+.hdr-inner{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px}
+.logo{font-size:clamp(32px,5vw,64px);font-weight:900;letter-spacing:6px;line-height:1;background:linear-gradient(135deg,#00d4ff,#a78bfa,#ff6b35);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.logo-sub{font-size:11px;color:#4a5568;letter-spacing:3px;text-transform:uppercase;margin-top:6px;font-family:monospace}
+.hdr-stats{display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+.stat{text-align:center}
+.stat-v{font-size:24px;font-weight:800;display:block;color:#00d4ff}
+.stat-l{font-size:9px;color:#4a5568;letter-spacing:2px;text-transform:uppercase}
+.hdiv{width:1px;height:32px;background:#1a2535}
+.live-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:100px;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:rgba(0,255,136,.08);border:1px solid rgba(0,255,136,.25);color:#00ff88}
+.pulse{width:6px;height:6px;border-radius:50%;background:#00ff88;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(1.5)}}
+/* BANNER */
+.banner{background:#0c1220;border:1px solid #1a2535;border-radius:16px;padding:24px 28px;margin-bottom:32px;display:grid;grid-template-columns:1fr 2fr 1fr;gap:20px;align-items:center;position:relative;overflow:hidden}
+.banner::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#00d4ff,#00ff88,#ff6b35,#a78bfa)}
+.eng{text-align:center;padding:16px;border-radius:10px;border:1px solid #1a2535}
+.eng1{background:rgba(0,212,255,.04);border-color:rgba(0,212,255,.15)}
+.eng2{background:rgba(167,139,250,.04);border-color:rgba(167,139,250,.15)}
+.eng-lbl{font-size:9px;color:#4a5568;letter-spacing:2px;text-transform:uppercase;margin-bottom:5px;font-family:monospace}
+.eng-name{font-size:18px;font-weight:900;letter-spacing:3px}
+.eng1 .eng-name{color:#00d4ff}.eng2 .eng-name{color:#a78bfa}
+.eng-desc{font-size:11px;color:#4a5568;margin-top:5px;line-height:1.5}
+.merge-mid{display:flex;flex-direction:column;align-items:center;gap:8px}
+.merge-title{font-size:clamp(18px,2.5vw,32px);font-weight:900;letter-spacing:5px;background:linear-gradient(135deg,#00d4ff,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-align:center}
+.merge-sub{font-size:10px;color:#4a5568;text-align:center;font-family:monospace}
+.acc-bar{width:100%;height:5px;background:#1a2535;border-radius:3px;overflow:hidden;margin-top:4px}
+.acc-fill{height:100%;background:linear-gradient(90deg,#00d4ff,#00ff88);border-radius:3px;width:0;animation:fillBar 2s ease forwards .5s}
+@keyframes fillBar{to{width:82%}}
+.acc-lbl{font-size:10px;color:#4a5568;text-align:center;margin-top:3px;font-family:monospace}
+/* FILTERS */
+.filters{display:flex;gap:8px;margin-bottom:28px;flex-wrap:wrap;align-items:center}
+.flt-lbl{font-size:10px;color:#4a5568;letter-spacing:2px;text-transform:uppercase}
+.fbtn{padding:6px 14px;border-radius:100px;border:1px solid #1a2535;background:transparent;color:#4a5568;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s}
+.fbtn:hover{border-color:#00d4ff;color:#00d4ff}
+.fbtn.act-all{background:#00d4ff;border-color:#00d4ff;color:#000}
+.fbtn.act-finance{background:#00d4ff;border-color:#00d4ff;color:#000}
+.fbtn.act-politics{background:#ff6b35;border-color:#ff6b35;color:#fff}
+.fbtn.act-business{background:#a78bfa;border-color:#a78bfa;color:#000}
+.fbtn.act-health{background:#00ff88;border-color:#00ff88;color:#000}
+/* SECTION */
+.sec-hdr{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.sec-title{font-size:22px;font-weight:900;letter-spacing:3px}
+.sec-line{flex:1;height:1px;background:#1a2535}
+.sec-cnt{font-family:monospace;font-size:10px;color:#4a5568;background:#0c1220;padding:3px 9px;border-radius:4px;border:1px solid #1a2535}
+/* GRID */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px;margin-bottom:40px}
+/* CARD */
+.card{background:#0f1621;border:1px solid #1a2535;border-radius:14px;padding:20px;transition:transform .2s,box-shadow .2s,border-color .2s;position:relative;overflow:hidden;cursor:pointer;animation:fadeUp .4s ease forwards;opacity:0;transform:translateY(16px)}
+.card:hover{transform:translateY(-6px)}
+@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.card.finance::before{background:#00d4ff}
+.card.politics::before{background:#ff6b35}
+.card.business::before{background:#a78bfa}
+.card.health::before{background:#00ff88}
+.card.finance:hover{box-shadow:0 16px 40px rgba(0,0,0,.5),0 0 0 1px #00d4ff;border-color:#00d4ff}
+.card.politics:hover{box-shadow:0 16px 40px rgba(0,0,0,.5),0 0 0 1px #ff6b35;border-color:#ff6b35}
+.card.business:hover{box-shadow:0 16px 40px rgba(0,0,0,.5),0 0 0 1px #a78bfa;border-color:#a78bfa}
+.card.health:hover{box-shadow:0 16px 40px rgba(0,0,0,.5),0 0 0 1px #00ff88;border-color:#00ff88}
+.card-num{font-size:48px;font-weight:900;line-height:1;position:absolute;top:12px;right:16px;opacity:.1;letter-spacing:2px}
+.card.finance .card-num{color:#00d4ff}.card.politics .card-num{color:#ff6b35}
+.card.business .card-num{color:#a78bfa}.card.health .card-num{color:#00ff88}
+.cat-tag{display:inline-flex;padding:3px 9px;border-radius:4px;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:7px}
+.ct-f{background:rgba(0,212,255,.1);color:#00d4ff}
+.ct-p{background:rgba(255,107,53,.1);color:#ff6b35}
+.ct-b{background:rgba(167,139,250,.1);color:#a78bfa}
+.ct-h{background:rgba(0,255,136,.1);color:#00ff88}
+.card-name{font-size:22px;font-weight:900;letter-spacing:2px;margin-bottom:4px;padding-right:50px;line-height:1.1}
+.card-desc{font-size:12px;color:#64748b;line-height:1.55;margin-bottom:14px}
+.acc-mini{margin-bottom:12px}
+.acc-mini-hdr{display:flex;justify-content:space-between;margin-bottom:4px}
+.acc-mini-lbl{font-size:9px;color:#4a5568;letter-spacing:1px;text-transform:uppercase}
+.acc-mini-val{font-size:10px;font-family:monospace;font-weight:700}
+.card.finance .acc-mini-val{color:#00d4ff}.card.politics .acc-mini-val{color:#ff6b35}
+.card.business .acc-mini-val{color:#a78bfa}.card.health .acc-mini-val{color:#00ff88}
+.mini-bar{height:4px;background:#1a2535;border-radius:2px;overflow:hidden}
+.mini-fill{height:100%;border-radius:2px;transition:width 1.2s ease}
+.card.finance .mini-fill{background:#00d4ff}.card.politics .mini-fill{background:#ff6b35}
+.card.business .mini-fill{background:#a78bfa}.card.health .mini-fill{background:#00ff88}
+.metrics{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.mbox{background:#080c14;border:1px solid #1a2535;border-radius:8px;padding:9px 11px}
+.m-lbl{font-size:8px;color:#4a5568;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:2px}
+.m-val{font-family:monospace;font-size:12px;font-weight:600;color:#e2e8f0}
+.m-val.profit{color:#00ff88}
+.m-val.sm{font-size:10px}
+.card-foot{display:flex;justify-content:space-between;align-items:center;padding-top:12px;border-top:1px solid #1a2535}
+.diff{display:flex;gap:4px;align-items:center}
+.dd{width:6px;height:6px;border-radius:50%;background:#1a2535}
+.card.finance .dd.on{background:#00d4ff}.card.politics .dd.on{background:#ff6b35}
+.card.business .dd.on{background:#a78bfa}.card.health .dd.on{background:#00ff88}
+.diff-lbl{font-size:10px;color:#4a5568;margin-left:5px}
+.tl{font-family:monospace;font-size:10px;padding:3px 9px;border-radius:4px;background:rgba(255,255,255,.03);border:1px solid #1a2535;color:#4a5568}
+.click-hint{position:absolute;bottom:12px;right:48px;font-size:9px;color:#4a5568;letter-spacing:1px;text-transform:uppercase;opacity:0;transition:opacity .2s}
+.card:hover .click-hint{opacity:1}
+
+/* ===== MODAL ===== */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(6px)}
+.overlay.open{display:flex}
+.modal{background:#0c1220;border:1px solid #1a2535;border-radius:20px;width:100%;max-width:820px;max-height:90vh;overflow-y:auto;position:relative;animation:slideUp .3s ease}
+@keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+.modal::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:20px 20px 0 0}
+.modal.finance::before{background:linear-gradient(90deg,#00d4ff,#00d4ff88)}
+.modal.politics::before{background:linear-gradient(90deg,#ff6b35,#ff6b3588)}
+.modal.business::before{background:linear-gradient(90deg,#a78bfa,#a78bfa88)}
+.modal.health::before{background:linear-gradient(90deg,#00ff88,#00ff8888)}
+.modal-close{position:absolute;top:16px;right:16px;width:36px;height:36px;border-radius:50%;background:#1a2535;border:1px solid #263040;color:#e2e8f0;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;z-index:10;line-height:1}
+.modal-close:hover{background:#263040;transform:rotate(90deg)}
+.modal-top{padding:32px 32px 24px;border-bottom:1px solid #1a2535}
+.modal-cat{display:inline-flex;padding:3px 10px;border-radius:4px;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px}
+.modal-title{font-size:clamp(26px,4vw,42px);font-weight:900;letter-spacing:3px;line-height:1.1;margin-bottom:8px}
+.modal-tagline{font-size:14px;color:#64748b;line-height:1.6;max-width:600px}
+.modal-body{padding:28px 32px;display:flex;flex-direction:column;gap:24px}
+/* MODAL SECTIONS */
+.msec{background:#080c14;border:1px solid #1a2535;border-radius:14px;padding:22px}
+.msec-title{font-size:11px;color:#4a5568;letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;font-family:monospace;display:flex;align-items:center;gap:8px}
+.msec-title::after{content:'';flex:1;height:1px;background:#1a2535}
+.pain-list,.benefit-list,.payer-list{list-style:none;display:flex;flex-direction:column;gap:8px}
+.pain-list li,.benefit-list li,.payer-list li{font-size:13px;color:#cbd5e0;line-height:1.6;padding-left:20px;position:relative}
+.pain-list li::before{content:'⚠';position:absolute;left:0;font-size:11px}
+.benefit-list li::before{content:'✓';position:absolute;left:0;color:#00ff88;font-size:12px;font-weight:700}
+.payer-list li::before{content:'→';position:absolute;left:0;color:#00d4ff;font-size:12px}
+/* PROFIT GRID */
+.profit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.pbox{background:#0c1220;border:1px solid #1a2535;border-radius:10px;padding:14px;text-align:center}
+.pbox-lbl{font-size:9px;color:#4a5568;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:5px}
+.pbox-val{font-family:monospace;font-size:15px;font-weight:700;color:#00ff88}
+.pbox-sub{font-size:10px;color:#4a5568;margin-top:2px}
+/* WHO PAYS */
+.payer-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pcard{background:#0c1220;border:1px solid #1a2535;border-radius:10px;padding:14px}
+.pcard-type{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px}
+.pcard-who{font-size:13px;color:#cbd5e0;margin-bottom:4px;font-weight:600}
+.pcard-why{font-size:11px;color:#4a5568;line-height:1.5}
+.pcard-price{font-family:monospace;font-size:12px;color:#00ff88;margin-top:6px;font-weight:700}
+/* WHY PAY */
+.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.wbox{background:#0c1220;border:1px solid #1a2535;border-radius:10px;padding:14px}
+.wbox-ico{font-size:20px;margin-bottom:6px}
+.wbox-title{font-size:11px;font-weight:700;color:#e2e8f0;margin-bottom:4px}
+.wbox-desc{font-size:11px;color:#4a5568;line-height:1.5}
+/* STEPS */
+.steps{display:flex;flex-direction:column;gap:10px}
+.step{display:flex;gap:14px;align-items:flex-start}
+.step-num{min-width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;font-family:monospace;flex-shrink:0}
+.step-content{padding-top:4px}
+.step-title{font-size:12px;font-weight:700;color:#e2e8f0;margin-bottom:2px}
+.step-desc{font-size:11px;color:#4a5568;line-height:1.5}
+/* ACC ROW */
+.acc-row{display:flex;align-items:center;gap:14px}
+.acc-big-bar{flex:1;height:10px;background:#1a2535;border-radius:5px;overflow:hidden}
+.acc-big-fill{height:100%;border-radius:5px}
+.acc-big-val{font-family:monospace;font-size:18px;font-weight:700;min-width:50px;text-align:right}
+/* SUMMARY SECTION */
+.summary{background:#0c1220;border:1px solid #1a2535;border-radius:16px;padding:32px;margin-bottom:32px;position:relative;overflow:hidden}
+.summary::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#00d4ff,#00ff88,#ff6b35,#a78bfa)}
+.sum-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:24px}
+.scard{text-align:center;padding:20px 12px;border-radius:12px;border:1px solid #1a2535;transition:transform .2s}
+.scard:hover{transform:translateY(-3px)}
+.scard.sf{background:rgba(0,212,255,.04);border-color:rgba(0,212,255,.15)}
+.scard.sp{background:rgba(255,107,53,.04);border-color:rgba(255,107,53,.15)}
+.scard.sb{background:rgba(167,139,250,.04);border-color:rgba(167,139,250,.15)}
+.scard.sh{background:rgba(0,255,136,.04);border-color:rgba(0,255,136,.15)}
+.s-ico{font-size:26px;margin-bottom:8px}
+.s-sec{font-size:16px;font-weight:900;letter-spacing:2px;margin-bottom:5px}
+.sf .s-sec{color:#00d4ff}.sp .s-sec{color:#ff6b35}.sb .s-sec{color:#a78bfa}.sh .s-sec{color:#00ff88}
+.s-ideas{font-size:10px;color:#4a5568;margin-bottom:8px}
+.s-rev{font-family:monospace;font-size:13px;font-weight:600;color:#00ff88}
+.s-rev-lbl{font-size:9px;color:#4a5568;letter-spacing:1px;text-transform:uppercase;margin-top:2px}
+.total{text-align:center;margin-top:32px;padding-top:24px;border-top:1px solid #1a2535}
+.total-lbl{font-size:10px;color:#4a5568;letter-spacing:3px;text-transform:uppercase;margin-bottom:6px}
+.total-num{font-size:clamp(42px,7vw,88px);font-weight:900;letter-spacing:4px;background:linear-gradient(135deg,#ffd700,#00ff88);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
+.total-sub{font-size:11px;color:#4a5568;margin-top:6px}
+/* TOP 3 */
+.top3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:40px}
+.pick{background:#0f1621;border:1px solid #1a2535;border-radius:12px;padding:18px;position:relative;overflow:hidden;transition:transform .2s;cursor:pointer}
+.pick:hover{transform:translateY(-4px)}
+.pick-n{font-size:56px;font-weight:900;line-height:1;position:absolute;right:12px;top:4px;opacity:.08}
+.pick-tag{font-size:9px;color:#ffd700;letter-spacing:2px;text-transform:uppercase;margin-bottom:7px;font-weight:700}
+.pick-name{font-size:18px;font-weight:900;letter-spacing:2px;margin-bottom:6px;padding-right:48px}
+.pick-why{font-size:11px;color:#4a5568;line-height:1.55;margin-bottom:12px}
+.pick-mets{display:flex;gap:12px}
+.pm{font-family:monospace;font-size:11px;font-weight:600;color:#e2e8f0}
+.pm span{color:#4a5568;font-size:9px;display:block;font-weight:400}
+.pick1{border-color:rgba(255,215,0,.2)}.pick2{border-color:rgba(0,212,255,.2)}.pick3{border-color:rgba(255,107,53,.2)}
+footer{border-top:1px solid #1a2535;padding:24px 0;text-align:center}
+footer p{font-family:monospace;font-size:10px;color:#4a5568;letter-spacing:2px;text-transform:uppercase}
+footer strong{color:#00d4ff}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:#07090f}
+::-webkit-scrollbar-thumb{background:#1a2535;border-radius:3px}
+@media(max-width:900px){.banner{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.sum-grid{grid-template-columns:1fr 1fr}.top3{grid-template-columns:1fr}.modal-body{padding:20px}.modal-top{padding:24px 20px 18px}.profit-grid{grid-template-columns:1fr 1fr}.payer-cards{grid-template-columns:1fr}.why-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="hdr">
+  <div class="hdr-inner">
+    <div>
+      <div class="logo">ORACLE ENGINE</div>
+      <div class="logo-sub">Pakistan Intelligence Dashboard — /last30days × MiroFish</div>
+    </div>
+    <div class="hdr-stats">
+      <div class="stat"><span class="stat-v">20</span><span class="stat-l">Ideas</span></div>
+      <div class="hdiv"></div>
+      <div class="stat"><span class="stat-v">4</span><span class="stat-l">Sectors</span></div>
+      <div class="hdiv"></div>
+      <div class="stat"><span class="stat-v" style="color:#00ff88">$830K</span><span class="stat-l">Max/Month</span></div>
+      <div class="hdiv"></div>
+      <span class="live-badge"><span class="pulse"></span>Click Any Card</span>
+    </div>
+  </div>
+</header>
+
+<div class="banner">
+  <div class="eng eng1"><div class="eng-lbl">Engine 01</div><div class="eng-name">/LAST30DAYS</div><div class="eng-desc">Real-time data: Reddit, X, YouTube, TikTok, HN &amp; Polymarket</div></div>
+  <div class="merge-mid">
+    <div class="merge-title">ORACLEENGINE</div>
+    <div class="merge-sub">Reality Sensing + Future Simulation = Prediction</div>
+    <div class="acc-bar"><div class="acc-fill"></div></div>
+    <div class="acc-lbl">82% Average Prediction Accuracy — Click any card for full details</div>
+  </div>
+  <div class="eng eng2"><div class="eng-lbl">Engine 02</div><div class="eng-name">MIROFISH</div><div class="eng-desc">Multi-agent swarm intelligence simulation &amp; prediction</div></div>
+</div>
+
+<div class="filters">
+  <span class="flt-lbl">Filter:</span>
+  <button class="fbtn act-all" onclick="filter('all',this)">All Ideas</button>
+  <button class="fbtn" onclick="filter('finance',this)">💰 Finance</button>
+  <button class="fbtn" onclick="filter('politics',this)">🏛️ Politics</button>
+  <button class="fbtn" onclick="filter('business',this)">🏢 Business</button>
+  <button class="fbtn" onclick="filter('health',this)">🏥 Health</button>
+</div>
+
+<!-- FINANCE -->
+<div class="sec-hdr" id="sec-finance"><div class="sec-title" style="color:#00d4ff">💰 Finance &amp; Investing</div><div class="sec-line"></div><div class="sec-cnt">5 IDEAS</div></div>
+<div class="grid" id="g-finance">
+  <div class="card finance" data-cat="finance" data-id="1" style="animation-delay:.05s" onclick="openModal(1)">
+    <div class="card-num">01</div><span class="cat-tag ct-f">Finance</span>
+    <div class="card-name">PreMarket Pakistan</div>
+    <div class="card-desc">PSX early warning system delivering next-day movement predictions every morning at 8am.</div>
+    <div class="acc-mini"><div class="acc-mini-hdr"><span class="acc-mini-lbl">Accuracy</span><span class="acc-mini-val">78%</span></div><div class="mini-bar"><div class="mini-fill" style="width:78%"></div></div></div>
+    <div class="metrics">
+      <div class="mbox"><div class="m-lbl">Revenue</div><div class="m-val profit">$99–$499/mo</div></div>
+      <div class="mbox"><div class="m-lbl">Target</div><div class="m-val sm">PSX Traders</div></div>
+      <div class="mbox"><div class="m-lbl">Clients</div><div class="m-val">50–200</div></div>
+      <div class="mbox"><div class="m-lbl">Max/Month</div><div class="m-val profit">$99,800</div></div>
+    </div>
+    <div class="card-foot"><div class="diff"><div class="dd on"></div><div class="dd on"></div><div class="dd"></div><span class="diff-lbl">Medium</span></div><span class="tl">⚡ 1–2 weeks</span></div>
+    <span class="click-hint">CLICK FOR FULL DETAILS →</span>
+  </div>
+  <div class="card finance" data-cat="finance" data-id="2" style="animation-delay:.1s" onclick="openModal(2)">
+    <div class="card-num">02</div><span class="cat-tag ct-f">Finance</span>
+    <div class="card-name">RupeeRadar</div>
+    <div class="card-desc">Monitors dollar hoarding signals to predict rupee movement 2–3 weeks before it happens.</div>
+    <div class="acc-mini"><div class="acc-mini-hdr"><span class="acc-mini-lbl">Accuracy</span><span class="acc-mini-val">75%</span></div><div class="mini-bar"><div class="mini-fill" style="width:75%"></div></div></div>
+    <div class="metrics">
+      <div class="mbox"><div class="m-lbl">Revenue</div><div class="m-val profit">$500–$2K/mo</div></div>
+      <div class="mbox"><div class="m-lbl">Target</div><div class="m-val sm">Importers/Exporters</div></div>
+      <div class="mbox"><div class="m-lbl">Clients</div><div class="m-val">20–100</div></div>
+      <div class="mbox"><div class="m-lbl">Max/Month</div><div class="m-val profit">$200,000</div></div>
+    </div>
+    <div class="card-foot"><div class="diff"><div class="dd on"></div><div class="dd on"></div><div class="dd on"></div><span class="diff-lbl">Hard</span></div><span class="tl">📅 3–4 weeks</span></div>
+    <span class="click-hint">CLICK FOR FULL DETAILS →</span>
+  </div>
+  <div class="card finance" data-cat="finance" data-id="3" style="animation-delay:.15s" onclick="openModal(3)">
+    <div class="card-num">03</div><span class="cat-tag ct-f">Finance</span>
+    <div class="card-name">CryptoUmmat</div>
+    <div class="card-desc">Tracks Pakistani crypto communities on X and Telegram to predict which coins will move next.</div>
+    <div class="acc-mini"><div class="acc-mini-hdr"><span class="acc-mini-lbl">Accuracy</span><span class="acc-mini-val">72%</span></div><div class="mini-bar"><div class="mini-fill" style="width:72%"></div></div></div>
+    <div class="metrics">
+      <div class="mbox"><div class="m-lbl">Revenue</div><div class="m-val profit">$29–$99/mo</div></div>
+      <div class="mbox"><div class="m-lbl">Target</div><div class="m-val sm">Crypto Investors</div></div>
+      <div class="mbox"><div class="m-lbl">Clients</div><div class="m-val">500–2,000</div></div>
+      <div class="mbox"><div class="m-lbl">Max/Month</div><div class="m-val profit">$198,000</div></div>
+    </div>
+    <div class="card-foot"><div class="diff"><div class="dd on"></div><div class="dd"></div><div class="dd"></div><span class="diff-lbl">Easy</span></div><span class="tl">⚡ 1–2 weeks</span></div>
+    <span class="click-hint">CLICK FOR FULL DETAILS →</span>
+  </div>
+  <div class="card finance" data-cat="finance" data-id="4" style="animation-delay:.2s" onclick="openModal(4)">
+    <div class="card-num">04</div><span class="cat-tag ct-f">Finance</span>
+    <div class="card-name">IMF Impact Sim</div>
+    <div class="card-desc">Simulates cascading economic effects of every IMF decision on Pakistani sectors within hours.</div>
+    <div class="acc-mini"><div class="acc-mini-hdr"><span class="acc-mini-lbl">Accuracy</span><span class="acc-mini-val">80%</span></div><div class="mini-bar"><div class="mini-fill" style="width:80%"></div></div></div>
+    <div class="metrics">
+      <div class="mbox"><div class="m-lbl">Revenue</div><div class="m-val profit">$1K–$5K/mo</div></div>
+      <div class="mbox"><div class="m-lbl">Target</div><div class="m-val sm">Corporations</div></div>
+      <div class="mbox"><div class="m-lbl">Clients</div><div class="m-val">10–50</div></div>
+      <div class="mbox"><div class="m-lbl">Max/Month</div><div class="m-val profit">$250,000</div></div>
+    </div>
+    <div class="card-foot"><div class="diff"><div class="dd on"></div><div class="dd on"></div><div class="dd on"></div><span class="diff-lbl">Hard</span></div><span class="tl">📅 4–6 weeks</span></div>
+    <span class="click-hint">CLICK FOR FULL DETAILS →</span>
+  </div>
+  <div class="card finance" data-cat="finance" data-id="5" style="animation-delay:.25s" onclick="openModal(5)">
+    <div class="card-num">05</div><span class="cat-tag ct-f">Finance</span>
+    <div class="card-name">SmartIPO</div>
+    <div class="card-desc">Predicts PSX IPO oversubscription vs undersubscription before the subscription window opens.</div>
+    <div class="acc-mini"><div class="acc-mini-hdr"><span class="acc-mini-lbl">Accuracy</span><span class="acc-mini-val">76%</span></div><div class="mini-bar"><div class="mini-fill" style="width:76%"></div></div></div>
+    <div class="metrics">
+      <div class="mbox"><div class="m-lbl">Revenue</div><div class="m-val profit">$199–$999/mo</div></div>
+      <div class="mbox"><div class="m-lbl">Target</div><div class="m-val sm">IPO Investors</div></div>
+      <div class="mbox"><div class="m-lbl">Clients</div><div class="m-val">50–200</div></div>
+      <div class="mbox"><div class="m-lbl">Max/Month</div><div class="m-val profit">$199,800</div></div>
+    </div>
+    <div class="card-foot"><div class="diff"><div class="dd on"></div><div class="dd on"></div><div class="dd"></div><span class="diff-lbl">Medium</span></div><span class="tl">📅 2–3 weeks</span></div>
+    <span class="click-hint">CLICK FOR FULL DETAILS →</span>
+  </div>
+</div>
+
+<!-- POLITICS -->
+<div class="sec-hdr" id="sec-politics"><div class="sec-title" style="color:#ff6b35">🏛️ Politics &amp; Government</div><div class="sec-line"></div><div class="sec-cnt">5 IDEAS</div></div>
+<div class="grid" id="g-politics">
+  <div class="card politics" data-cat="politics" data-id="6" style="animation-delay:.05s" onclick="openModal(6)">
+    <div class="card-num">06</div><span class="cat-tag ct-p">Politics</span>
+    <div class="card-name">VoxPak</div>
+    <div class="card-desc">Simulates voter behavior across provinces and predicts public reaction to any political event.</div>
+    <div class="acc-mini"><div class="acc-mini-hdr"><span class="acc-mini-lbl">Accuracy</span><span class="acc-mini-val">73%</span></div><div class="mini-bar"><div class="mini-fill" style="width:73%"></div></div></div>
+    <div class="metrics">
+      <div class="mbox"><div class="m-lbl">Per Campaign</div><div class="m-val profit">$10K–$50K</div></div>
+      <div class="mbox"><div class="m-lbl">Target</div><div class="m-val sm">Political Parties</div></div>
+      <div class="mbox"><div class="m-lbl">Clients/Cycle</div><div class="m-val">3–8</div></div>
+      <div class="mbox"><div class="m-lbl">Max/Cycle</div><div class="m-val profit">$400,000</div></div>
+    </div>
+    <div class="card-foot"><div class="diff"><div class="dd on"></div><div class="dd on"></div><div class="dd on"></div><span class="diff-lbl">Hard</span></div><span class="tl">📅 4–6 weeks</span></div>
+    <span class="click-hint">CLICK FOR FULL DETAILS →</span>
+  </div>
+  <div class="card politics" data-cat="politics" data-id="7" style="animation-delay:.1s" onclick="openModal(7)">
+    <div class="card-num">07</div><span class="cat-tag ct-p">Politics</span>
+    <div class="card-name">DharnaMeter</div>
+    <div class="card-desc">Predicts protest scale, location, and duration 48–72 hours before it happens in Pakistan.</div>
+    <div class="acc-mini"><div class="acc-mini-hdr"><span class="acc-mini-lbl">Accuracy</span><span class="acc-mini-val">79%</span></div><div class="mini-bar"><div class="mini-fill" style="width:79%"></div></div></div>
+    <div class="metrics">
+      <div class="mbox"><div class="m-lbl">Revenue</div><div class="m-val profit">$2K–$10K/mo</div></div>
+      <div class="mbox"><div class="m-lbl">Target</div><div class="m-val sm">Govt &amp; Media</div></div>
+      <div class="mbox"><div class="m-lbl">Clients</div><div class="m-val">5–20</div></div>
+      <div class="mbox"><div class="m-lbl">Max/Month</div><div class="m-val profit">$200,000</div></div>
+    </div>
+    <div class="card-foot"><div class="diff"><div class="dd on"></div><div class="dd on"></div><div class="dd"></div><span class="diff-lbl">Medium</span></div><span class="tl">📅 2–4 weeks</span></div>
+    <span class="click-hint">CLICK FOR FULL DETAILS →</span>
+  </div>
+  <div class="card politics" data-cat="politics" data-id="8" style="animation-delay:.15s" onclick="openModal(8)">
+    <div class="card-num">08</div><span class="cat-tag ct-p">Politics</span>
+    <div class="card-name">PolicyTest</div>
+    <div class="card-desc">Tests citizen reaction to draft government policies before public announcement — zero risk.</div>
+    <div class="acc-mini"><div class="acc-mini-hdr"><span class="acc-mini-lbl">Accuracy</span><span class="acc-mini-val">77%</span></div><div class="mini-bar"><div class="mini-fill" style="width:77%"></div></div></div>
+    <div class="metrics">
+      <div class="mbox"><div class="m-lbl">Per Sim</div><div class="m-val profit">$20K–$100K</div></div>
+      <div class="mbox"><div class="m-lbl">Target</div><div class="m-val sm">Ministries</div></div>
+      <div class="mbox"><div class="m-lbl">Contracts/yr</div><div class="m-val">2–5</div></div>
+      <div class="mbox"><div class="m-lbl">Max Annual</div><div class="m-val profit">$500,000</div></div>
+    </div>
+    <div class="card-foot"><div class="diff"><div class="dd on"></div><div class="dd on"></div><div class="dd on"></div><span class="diff-lbl">Hard</span></div><span class="tl">📅 6–8 weeks</span></div>
+    <span class="click-hint">CLICK FOR FULL DETAILS →</span>
+  </div>
+  <div class="card politics" data-cat="politics" data-id="9" style="animation-delay:.2s" onclick="openModal(9)">
+    <div class="card-num">09</div><span class="cat-tag ct-p">Politics</span>
+    <div class="card-name">ElectionOracle</div>
+    <div class="card-desc">Seat-by-seat Pakistan election predictor with confidence scores — beats traditional polling.</div>
+    <div class="acc-mini"><div class="acc-mini-hdr"><span class="acc-mini-lbl">Accuracy</span><span class="acc-mini-val">71%</span></div><div class="mini-bar"><div class="mini-fill" style="width:71%"></div></div></div>
+    <div class="metrics">
+      <div class="mbox"><div class="m-lbl">Per Cycle</div><div class="m-val profit">$50K–$200K</div></div>
+      <div class="mbox"><div class="m-lbl">Target</div><div class="m-val sm">Parties &amp; Media</div></div>
+      <div class="mbox"><div class="m-lbl">Clients</div><div class="m-val">2–4</div></div>
+      <div class="mbox"><div class="m-lbl">Max/Election</div><div class="m-val profit">$800,000</div></div>
+    </div>
+    <div class="card-foot"><div class="diff"><div class="dd on"></div><div class="dd on"></div><div class="dd on"></div><span class="diff-lbl">Very Hard</span></div><span class="tl">📅 8–12 weeks</span></div>
+    <span class="click-hint">CLICK FOR FULL DETAILS →</span>
+  </div>
+  <div class="card politics" data-cat="politics" data-id="10" style="animation-delay:.25s" onclick="openModal(10)">
+    <div class="card-num">10</div><span class="cat-tag ct-p">Politics</span>
+    <div class="card-name">DiplomacyRadar</div>
+    <div class="card-desc">Monitors Pak-India, Pak-USA, Pak-China relations and predicts diplomatic tensions and their business impact.</div>
+    <div class="acc-mini"><div class="acc-mini-hdr"><span class="acc-mini-lbl">Accuracy</span><span class="acc-mini-val">68%</span></div><div class="mini-bar"><div class="mini-fill" style="width:68%"></div></div></div>
+    <div class="metrics">
+      <div class="mbox"><div class="m-lbl">Revenue</div><div class="m-val profit">$5K–$20K/mo</div></div>
+      <div class="mbox"><div class="m-lbl">Target</div><div class="m-val sm">Multinationals</div></div>
+      <div class="mbox"><div class="m-lbl">Clients</div><div class="m-val">5–15</div></div>
+      <div class="mbox"><div class="m-lbl">Max/Month</div><div class="m-val profit">$300,000</div></div>
+    </div>
+    <div class="card-foot"><div class="diff"><div class="dd on"></div><div class="dd on"></div><div class="dd on"></div><span class="diff-lbl">Hard</span></div><span class="tl">📅 6–8 weeks</span></div>
+    <span class="click-hint">CLICK FOR FULL DETAILS →</span>
+  </div>
+</div>
+
+<!-- BUSINESS -->
+<div class="sec-hdr" id="sec-business"><div class="sec-title" style="color:#a78bfa">🏢 Business &amp; Enterprise</div><div class="sec-line"></div><div class="sec-cnt">5 IDEAS</div></div>
+<div class="grid" id="g-business">
+  <div class="card business" data-cat="business" data-id="11" style="animation-delay:.05s" onclick="openModal(11)">
+    <div class="card-num">11</div><span class="cat-tag ct-b">Business</span>
+    <div class="card-name">BrandShield</div>
+    <div class="card-desc">Predicts Pakistani brand boycott campaigns 24–48 hours before they explode on social media.</div>
+    <div class="acc-mini"><div class="acc-mini-hdr"><span class="acc-mini-lbl">Accuracy</span><span class="acc-mini-val">85%</span></div><div class="mini-bar"><div class="mini-fill" style="width:85%"></div></div></div>
+    <div class="metrics">
+      <div class="mbox"><div class="m-lbl">Revenue</div><div class="m-val profit">$1K–$5K/mo</div></div>
+      <div class="mbox"><div class="m-lbl">Target</div><div class="m-val sm">FMCG Brands</div></div>
+      <div class="mbox"><div class="m-lbl">Clients</div><div class="m-val">20–50</div></div>
+      <div class="mbox"><div class="m-lbl">Max/Month</div><div class="m-val profit">$250,000</div></div>
+    </div>
+    <div class="card-foot"><div class="diff"><div class="dd on"></div><div class="dd on"></div><div class="dd"></div><span class="diff-lbl">Medium</span></div><span class="tl">⚡ 2–3 weeks</span></div>
+    <span class="click-hint">CLICK FOR FULL DETAILS →</span>
+  </div>
+  <div class="card business" data-cat="business" data-id="12" style="animation-delay:.1s" onclick="openModal(12)">
+    <div class="card-num">12</div><span class="cat-tag ct-b">Business</span>
+    <div class="card-name">LaunchLens</div>
+    <div class="card-desc">Simulates Pakistani customer reactions to any product launch before spending on marketing.</div>
+    <div class="acc-mini"><div class="acc-mini-hdr"><span class="acc-mini-lbl">Accuracy</span><span class="acc-mini-val">78%</span></div><div class="mini-bar"><div class="mini-fill" style="width:78%"></div></div></div>
+    <div class="metrics">
+      <div class="mbox"><div class="m-lbl">Per Sim</div><div class="m-val profit">$5K–$20K</div></div>
+      <div class="mbox"><div class="m-lbl">Target</div><div class="m-val sm">FMCG &amp; Retail</div></div>
+      <div class="mbox"><div class="m-lbl">Clients/yr</div><div class="m-val">10–30</div></div>
+      <div class="mbox"><div class="m-lbl">Max Annual</div><div class="m-val profit">$600,000</div></div>
+    </div>
+    <div class="card-foot"><div class="diff"><div class="dd on"></div><div class="dd on"></div><div class="dd"></div><span class="diff-lbl">Medium</span></div><span class="tl">📅 3–4 weeks</span></div>
+    <span class="click-hint">CLICK FOR FULL DETAILS →</span>
+  </div>
+  <div class="card business" data-cat="business" data-id="13" style="animation-delay:.15s" onclick="openModal(13)">
+    <div class="card-num">13</div><span class="cat-tag ct-b">Business</span>
+    <div class="card-name">RealEstate Oracle</div>
+    <div class="card-desc">Predicts DHA and Bahria Town price surges 3–6 months before they happen using community signals.</div>
+    <div class="acc-mini"><div class="acc-mini-hdr"><span class="acc-mini-lbl">Accuracy</span><span class="acc-mini-val">74%</span></div><div class="mini-bar"><div class="mini-fill" style="width:74%"></div></div></div>
+    <div class="metrics">
+      <div class="mbox"><div class="m-lbl">Revenue</div><div class="m-val profit">$299–$999/mo</div></div>
+      <div class="mbox"><div class="m-lbl">Target</div><div class="m-val sm">Property Investors</div></div>
+      <div class="mbox"><div class="m-lbl">Clients</div><div class="m-val">100–500</div></div>
+      <div class="mbox"><div class="m-lbl">Max/Month</div><div class="m-val profit">$499,500</div></div>
+    </div>
+    <div class="card-foot"><div class="diff"><div class="dd on"></div><div class="dd on"></div><div class="dd"></div><span class="diff-lbl">Medium</span></div><span class="tl">📅 3–5 weeks</span></div>
+    <span class="click-hint">CLICK FOR FULL DETAILS →</span>
+  </div>
+  <div class="card business" data-cat="business" data-id="14" style="animation-delay:.2s" onclick="openModal(14)">
+    <div class="card-num">14</div><span class="cat-tag ct-b">Business</span>
+    <div class="card-name">StartupValidator</div>
+    <div class="card-desc">Validates any Pakistan startup idea using real community data — go/no-go in 48 hours.</div>
+    <div class="acc-mini"><div class="acc-mini-hdr"><span class="acc-mini-lbl">Accuracy</span><span class="acc-mini-val">81%</span></div><div class="mini-bar"><div class="mini-fill" style="width:81%"></div></div></div>
+    <div class="metrics">
+      <div class="mbox"><div class="m-lbl">Per Report</div><div class="m-val profit">$200–$500</div></div>
+      <div class="mbox"><div class="m-lbl">Target</div><div class="m-val sm">Founders</div></div>
+      <div class="mbox"><div class="m-lbl">Reports/mo</div><div class="m-val">20–100</div></div>
+      <div class="mbox"><div class="m-lbl">Max/Month</div><div class="m-val profit">$50,000</div></div>
+    </div>
+    <div class="card-foot"><div class="diff"><div class="dd on"></div><div class="dd"></div><div class="dd"></div><span class="diff-lbl">Easy</span></div><span class="tl">⚡ 1 week</span></div>
+    <span class="click-hint">CLICK FOR FULL DETAILS →</span>
+  </div>
+  <div class="card business" data-cat="business" data-id="15" style="animation-delay:.25s" onclick="openModal(15)">
+    <div class="card-num">15</div><span class="cat-tag ct-b">Business</span>
+    <div class="card-name">RamadanPredict</div>
+    <div class="card-desc">Predicts price spikes, product demand surges, and charity trends weeks before Ramadan begins.</div>
+    <div class="acc-mini"><div class="acc-mini-hdr"><span class="acc-mini-lbl">Accuracy</span><span class="acc-mini-val">88%</span></div><div class="mini-bar"><div class="mini-fill" style="width:88%"></div></div></div>
+    <div class="metrics">
+      <div class="mbox"><div class="m-lbl">Per Season</div><div class="m-val profit">$500–$2K</div></div>
+      <div class="mbox"><div class="m-lbl">Target</div><div class="m-val sm">Retailers</div></div>
+      <div class="mbox"><div class="m-lbl">Clients/yr</div><div class="m-val">50–200</div></div>
+      <div class="mbox"><div class="m-lbl">Max Annual</div><div class="m-val profit">$400,000</div></div>
+    </div>
+    <div class="card-foot"><div class="diff"><div class="dd on"></div><div class="dd"></div><div class="dd"></div><span class="diff-lbl">Easy</span></div><span class="tl">⚡ 3–4 weeks</span></div>
+    <span class="click-hint">CLICK FOR FULL DETAILS →</span>
+  </div>
+</div>
+
+<!-- HEALTH -->
+<div class="sec-hdr" id="sec-health"><div class="sec-title" style="color:#00ff88">🏥 Health &amp; Society</div><div class="sec-line"></div><div class="sec-cnt">5 IDEAS</div></div>
+<div class="grid" id="g-health">
+  <div class="card health" data-cat="health" data-id="16" style="animation-delay:.05s" onclick="openModal(16)">
+    <div class="card-num">16</div><span class="cat-tag ct-h">Health</span>
+    <div class="card-name">DengueDefense</div>
+    <div class="card-desc">Predicts dengue, cholera, and polio hotspots 3–4 weeks before they peak across Pakistani cities.</div>
+    <div class="acc-mini"><div class="acc-mini-hdr"><span class="acc-mini-lbl">Accuracy</span><span class="acc-mini-val">82%</span></div><div class="mini-bar"><div class="mini-fill" style="width:82%"></div></div></div>
+    <div class="metrics">
+      <div class="mbox"><div class="m-lbl">Revenue</div><div class="m-val profit">$10K–$50K/mo</div></div>
+      <div class="mbox"><div class="m-lbl">Target</div><div class="m-val sm">Health Depts</div></div>
+      <div class="mbox"><div class="m-lbl">Clients</div><div class="m-val">4–8</div></div>
+      <div class="mbox"><div class="m-lbl">Max/Month</div><div class="m-val profit">$400,000</div></div>
+    </div>
+    <div class="card-foot"><div class="diff"><div class="dd on"></div><div class="dd on"></div><div class="dd on"></div><span class="diff-lbl">Hard</span></div><span class="tl">📅 6–8 weeks</span></div>
+    <span class="click-hint">CLICK FOR FULL DETAILS →</span>
+  </div>
+  <div class="card health" data-cat="health" data-id="17" style="animation-delay:.1s" onclick="openModal(17)">
+    <div class="card-num">17</div><span class="cat-tag ct-h">Health</span>
+    <div class="card-name">MentalHealthPulse</div>
+    <div class="card-desc">Identifies at-risk Pakistani communities by simulating social contagion of mental health crises.</div>
+    <div class="acc-mini"><div class="acc-mini-hdr"><span class="acc-mini-lbl">Accuracy</span><span class="acc-mini-val">70%</span></div><div class="mini-bar"><div class="mini-fill" style="width:70%"></div></div></div>
+    <div class="metrics">
+      <div class="mbox"><div class="m-lbl">Revenue</div><div class="m-val profit">$5K–$20K/mo</div></div>
+      <div class="mbox"><div class="m-lbl">Target</div><div class="m-val sm">WHO &amp; NGOs</div></div>
+      <div class="mbox"><div class="m-lbl">Clients</div><div class="m-val">3–10</div></div>
+      <div class="mbox"><div class="m-lbl">Max/Month</div><div class="m-val profit">$200,000</div></div>
+    </div>
+    <div class="card-foot"><div class="diff"><div class="dd on"></div><div class="dd on"></div><div class="dd on"></div><span class="diff-lbl">Hard</span></div><span class="tl">📅 6–10 weeks</span></div>
+    <span class="click-hint">CLICK FOR FULL DETAILS →</span>
+  </div>
+  <div class="card health" data-cat="health" data-id="18" style="animation-delay:.15s" onclick="openModal(18)">
+    <div class="card-num">18</div><span class="cat-tag ct-h">Health</span>
+    <div class="card-name">MisinfoShield</div>
+    <div class="card-desc">Detects viral misinformation 24–48 hours early and simulates which communities will be most affected.</div>
+    <div class="acc-mini"><div class="acc-mini-hdr"><span class="acc-mini-lbl">Accuracy</span><span class="acc-mini-val">83%</span></div><div class="mini-bar"><div class="mini-fill" style="width:83%"></div></div></div>
+    <div class="metrics">
+      <div class="mbox"><div class="m-lbl">Revenue</div><div class="m-val profit">$5K–$20K/mo</div></div>
+      <div class="mbox"><div class="m-lbl">Target</div><div class="m-val sm">PEMRA &amp; Media</div></div>
+      <div class="mbox"><div class="m-lbl">Clients</div><div class="m-val">3–8</div></div>
+      <div class="mbox"><div class="m-lbl">Max/Month</div><div class="m-val profit">$160,000</div></div>
+    </div>
+    <div class="card-foot"><div class="diff"><div class="dd on"></div><div class="dd on"></div><div class="dd"></div><span class="diff-lbl">Medium</span></div><span class="tl">📅 4–6 weeks</span></div>
+    <span class="click-hint">CLICK FOR FULL DETAILS →</span>
+  </div>
+  <div class="card health" data-cat="health" data-id="19" style="animation-delay:.2s" onclick="openModal(19)">
+    <div class="card-num">19</div><span class="cat-tag ct-h">Health</span>
+    <div class="card-name">FloodRisk Sim</div>
+    <div class="card-desc">Simulates population displacement to predict which areas need evacuation 1–2 weeks before flooding peaks.</div>
+    <div class="acc-mini"><div class="acc-mini-hdr"><span class="acc-mini-lbl">Accuracy</span><span class="acc-mini-val">80%</span></div><div class="mini-bar"><div class="mini-fill" style="width:80%"></div></div></div>
+    <div class="metrics">
+      <div class="mbox"><div class="m-lbl">Annual</div><div class="m-val profit">$20K–$100K</div></div>
+      <div class="mbox"><div class="m-lbl">Target</div><div class="m-val sm">NDMA &amp; Aid Agencies</div></div>
+      <div class="mbox"><div class="m-lbl">Contracts</div><div class="m-val">2–5</div></div>
+      <div class="mbox"><div class="m-lbl">Max Annual</div><div class="m-val profit">$500,000</div></div>
+    </div>
+    <div class="card-foot"><div class="diff"><div class="dd on"></div><div class="dd on"></div><div class="dd on"></div><span class="diff-lbl">Hard</span></div><span class="tl">📅 8–12 weeks</span></div>
+    <span class="click-hint">CLICK FOR FULL DETAILS →</span>
+  </div>
+  <div class="card health" data-cat="health" data-id="20" style="animation-delay:.25s" onclick="openModal(20)">
+    <div class="card-num">20</div><span class="cat-tag ct-h">Health</span>
+    <div class="card-name">SupplyChainSense</div>
+    <div class="card-desc">Predicts raw material shortages 4–8 weeks before they hit Pakistan using global supply chain signals.</div>
+    <div class="acc-mini"><div class="acc-mini-hdr"><span class="acc-mini-lbl">Accuracy</span><span class="acc-mini-val">76%</span></div><div class="mini-bar"><div class="mini-fill" style="width:76%"></div></div></div>
+    <div class="metrics">
+      <div class="mbox"><div class="m-lbl">Revenue</div><div class="m-val profit">$2K–$10K/mo</div></div>
+      <div class="mbox"><div class="m-lbl">Target</div><div class="m-val sm">Manufacturers</div></div>
+      <div class="mbox"><div class="m-lbl">Clients</div><div class="m-val">10–40</div></div>
+      <div class="mbox"><div class="m-lbl">Max/Month</div><div class="m-val profit">$400,000</div></div>
+    </div>
+    <div class="card-foot"><div class="diff"><div class="dd on"></div><div class="dd on"></div><div class="dd"></div><span class="diff-lbl">Medium</span></div><span class="tl">📅 4–5 weeks</span></div>
+    <span class="click-hint">CLICK FOR FULL DETAILS →</span>
+  </div>
+</div>
+
+<!-- SUMMARY -->
+<div class="summary">
+  <div class="sec-hdr" style="margin-bottom:0"><div class="sec-title">📊 Revenue Summary</div><div class="sec-line"></div><span class="live-badge"><span class="pulse"></span>Pakistan Only</span></div>
+  <div class="sum-grid">
+    <div class="scard sf"><div class="s-ico">💰</div><div class="s-sec">Finance</div><div class="s-ideas">5 Ideas</div><div class="s-rev">$30K–$100K</div><div class="s-rev-lbl">Per Month</div></div>
+    <div class="scard sp"><div class="s-ico">🏛️</div><div class="s-sec">Politics</div><div class="s-ideas">5 Ideas</div><div class="s-rev">$50K–$200K</div><div class="s-rev-lbl">Per Month</div></div>
+    <div class="scard sb"><div class="s-ico">🏢</div><div class="s-sec">Business</div><div class="s-ideas">5 Ideas</div><div class="s-rev">$40K–$150K</div><div class="s-rev-lbl">Per Month</div></div>
+    <div class="scard sh"><div class="s-ico">🏥</div><div class="s-sec">Health</div><div class="s-ideas">5 Ideas</div><div class="s-rev">$30K–$100K</div><div class="s-rev-lbl">Per Month</div></div>
+  </div>
+  <div class="total"><div class="total-lbl">Total Pakistan Market Potential</div><div class="total-num">$830,000</div><div class="total-sub">Monthly — before expanding to UAE, Saudi Arabia, India &amp; Bangladesh</div></div>
+</div>
+
+<!-- TOP 3 -->
+<div class="sec-hdr"><div class="sec-title" style="color:#ffd700">🏆 Best 3 To Start This Week</div><div class="sec-line"></div></div>
+<div class="top3">
+  <div class="pick pick1" onclick="openModal(14)"><div class="pick-n">1</div><div class="pick-tag">🥇 Easiest Win</div><div class="pick-name">StartupValidator</div><div class="pick-why">Run both tools manually, charge $200–$500 per report. Zero infrastructure needed. First client in 7 days.</div><div class="pick-mets"><div class="pm">$50K/mo<span>Max Revenue</span></div><div class="pm">1 week<span>To Launch</span></div><div class="pm">81%<span>Accuracy</span></div></div></div>
+  <div class="pick pick2" onclick="openModal(11)"><div class="pick-n">2</div><div class="pick-tag">⚡ Best ROI</div><div class="pick-name">BrandShield</div><div class="pick-why">FMCG brands desperately need crisis prevention. One prevented boycott saves millions. Offer a free pilot today.</div><div class="pick-mets"><div class="pm">$250K/mo<span>Max Revenue</span></div><div class="pm">2–3 weeks<span>To Launch</span></div><div class="pm">85%<span>Accuracy</span></div></div></div>
+  <div class="pick pick3" onclick="openModal(1)"><div class="pick-n">3</div><div class="pick-tag">🚀 Highest Upside</div><div class="pick-name">PreMarket Pakistan</div><div class="pick-why">PSX brokers already pay for research. Next-day predictions is a gap nobody in Pakistan fills right now.</div><div class="pick-mets"><div class="pm">$99K/mo<span>Max Revenue</span></div><div class="pm">1–2 weeks<span>To Launch</span></div><div class="pm">78%<span>Accuracy</span></div></div></div>
+</div>
+
+<footer><p>OracleEngine &mdash; <strong>/last30days</strong> &times; <strong>MiroFish</strong> &mdash; World's First Reality-to-Simulation Intelligence Platform &mdash; 🇵🇰 Pakistan</p></footer>
+</div>
+
+<!-- MODAL -->
+<div class="overlay" id="overlay" onclick="closeOnBg(event)">
+  <div class="modal" id="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-top" id="modal-top"></div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+var ideas = {
+  1:{cat:'finance',catLabel:'Finance',accent:'#00d4ff',num:'01',name:'PreMarket Pakistan',tagline:'PSX early warning system  -  next-day stock movement predictions delivered every morning at 8am based on real Pakistani community sentiment.',accuracy:78,revenue:'$99-$499/month per user',clients:'50-200 active subscribers',maxMonthly:'$99,800',timeline:'1-2 weeks to first paying customer',difficulty:'Medium',
+  pain:['PSX traders make decisions based on gut feeling or outdated news','By the time mainstream media reports a trend, it is already priced in','No affordable real-time community sentiment tool exists for Pakistani retail traders','Traders lose money daily due to missing early signals from Reddit and Twitter communities'],
+  benefits:['Receive PSX movement predictions at 8am every trading day','Know what the community is feeling before the market opens','Reduce emotional trading decisions with data-backed signals','Gain a consistent edge over other retail traders who react late'],
+  whoAndWhy:[{type:'Primary Payer',who:'PSX Retail Traders',why:'They already spend money on research apps, broker tips, and TV subscriptions. A $99/month tool that gives them a consistent daily edge is extremely cheap compared to their trading losses.',price:'$99-$199/month'},{type:'High Value',who:'Brokerage Houses',why:'Brokerages want to offer value-added services to their clients. They will white-label or resell your tool to thousands of their customers at a margin.',price:'$500-$2,000/month'},{type:'Enterprise',who:'Asset Management Firms',why:'AMCs managing billions in PSX need every edge. Real-time community sentiment is something Bloomberg Terminal does not provide for Pakistan.',price:'$2,000-$5,000/month'},{type:'Media',who:'Financial News Channels',why:'Dunya News, ARY News financial desks will pay for real-time sentiment data to use in their live broadcasts and analysis segments.',price:'$1,000-$3,000/month'}],
+  whyPay:['Every rupee lost in a bad trade costs more than a month of subscription','Brokers already charge commissions  -  sentiment data is much cheaper','The tool pays for itself after preventing just ONE bad trade','No comparable product exists in Pakistan  -  monopoly pricing opportunity'],
+  steps:['Run /last30days on "PSX stocks Pakistan" and "KSE 100 Pakistan" today','Feed that output into MiroFish as seed data and generate a prediction report','Send the report to 3 brokers or traders you know personally  -  for free','Ask them: "Would you pay $99/month to receive this every morning?"','If 2 say yes, you have product-market fit  -  start charging immediately']},
+
+  2:{cat:'finance',catLabel:'Finance',accent:'#00d4ff',num:'02',name:'RupeeRadar',tagline:'Currency crisis predictor  -  monitors dollar hoarding signals, SBP policy discussions, and IMF news to predict rupee movement 2-3 weeks before it happens.',accuracy:75,revenue:'$500-$2,000/month per business',clients:'20-100 businesses',maxMonthly:'$200,000',timeline:'3-4 weeks to launch',difficulty:'Hard',
+  pain:['Pakistan importers lose millions when the rupee suddenly drops 5-10%','Exporters miss profit windows by not knowing when to convert dollars','Businesses cannot hedge properly without reliable 2-4 week forecasts','Current forex analysis is too expensive or too slow for SMEs'],
+  benefits:['Get 2-3 week advance warning before major rupee movements','Plan import orders and dollar purchases strategically','Protect profit margins on international contracts','Hedge currency exposure before devaluation hits'],
+  whoAndWhy:[{type:'Primary Payer',who:'Import/Export Businesses',why:'A single wrong currency decision can wipe out 6 months of profit. A $500/month subscription that prevents even one bad timing decision saves tens of thousands.',price:'$500-$1,000/month'},{type:'High Value',who:'Currency Exchange Companies',why:'Musarraf Exchange, Al-Baraka  -  these companies live and die on rupee movement. Accurate 2-week forecasts are worth thousands per month.',price:'$2,000-$5,000/month'},{type:'Enterprise',who:'Commercial Banks (HBL, MCB, UBL)',why:'Banks offer forex advisory to corporate clients. Your data gives them a competitive edge in their treasury and advisory services.',price:'$5,000-$20,000/month'},{type:'International',who:'Multinational Companies',why:'Companies like Nestle Pakistan, Unilever Pakistan hedge billions in currency exposure. Accurate local sentiment data is priceless.',price:'$3,000-$10,000/month'}],
+  whyPay:['One prevented bad currency decision = 12 months of subscription fees','No Pakistani tool currently provides 2-3 week rupee forecasts based on community intelligence','Banks charge more for less accurate forecasts','Dollar volatility is a constant daily pain for every Pakistani business'],
+  steps:['Monitor Pakistani financial Twitter for dollar hoarding and SBP discussion signals','Feed this data into MiroFish to simulate currency behavior patterns','Create a sample 2-week rupee prediction report as a PDF','Contact 5 import/export businesses via LinkedIn or Chamber of Commerce','Offer a free 30-day trial  -  convert to paid after first accurate prediction']},
+
+  3:{cat:'finance',catLabel:'Finance',accent:'#00d4ff',num:'03',name:'CryptoUmmat',tagline:'Pakistan crypto sentiment engine  -  tracks local communities on X and Telegram to predict which coins Pakistani retail investors will move on next.',accuracy:72,revenue:'$29-$99/month per trader',clients:'500-2,000 subscribers',maxMonthly:'$198,000',timeline:'1-2 weeks to launch',difficulty:'Easy',
+  pain:['Pakistan has one of the highest crypto adoption rates in the world but zero local intelligence tools','Pakistani crypto investors rely on global Twitter which often misses local community movements','Small retail investors buy tops and sell bottoms because they lack community sentiment data','Telegram pump groups manipulate Pakistani investors who have no counter-intelligence'],
+  benefits:['Know what Pakistani crypto communities are accumulating before the move happens','Detect Telegram pump signals early and avoid being the exit liquidity','Get community sentiment scores for top 20 coins popular in Pakistan','Weekly report on emerging coins gaining traction in Pakistani communities'],
+  whoAndWhy:[{type:'Primary Payer',who:'Pakistani Crypto Retail Investors',why:'Pakistan has millions of crypto users. Even capturing 0.1% of them at $29/month is enormous. They pay because they are already losing money without intelligence.',price:'$29-$49/month'},{type:'High Value',who:'Crypto Trading Groups on Telegram',why:'Group admins with 10,000+ members will pay for exclusive intelligence to share with their paid premium members.',price:'$99-$299/month'},{type:'Enterprise',who:'Crypto Exchanges Operating in Pakistan',why:'Binance, OKX, and local exchanges want user engagement data. They will pay for insights into Pakistani user behavior.',price:'$1,000-$5,000/month'},{type:'Media',who:'Pakistani Finance YouTubers',why:'Crypto YouTube channels with large Pakistani audiences will pay for exclusive data to drive their content and gain credibility.',price:'$99-$499/month'}],
+  whyPay:['Crypto losses are immediate and painful  -  prevention tools sell themselves','$29/month is less than the cost of one bad trade','No Pakistani-specific crypto sentiment tool exists anywhere','Community-driven market moves are predictable  -  this tool gives the edge'],
+  steps:['Join 20 Pakistani crypto Telegram groups and monitor discussions for 1 week','Run /last30days on "Pakistan crypto" and "Bitcoin Pakistan" right now','Create a simple weekly report showing top mentioned coins and sentiment','Post it for free in 3 Telegram groups and ask "would you pay $29/month for daily alerts?"','Set up a simple Stripe payment link and start collecting subscribers']},
+
+  4:{cat:'finance',catLabel:'Finance',accent:'#00d4ff',num:'04',name:'IMF Impact Sim',tagline:'Simulates cascading economic effects of every IMF announcement on Pakistani sectors  -  delivers a business impact report within hours of any IMF decision.',accuracy:80,revenue:'$1,000-$5,000/month per corporation',clients:'10-50 corporations',maxMonthly:'$250,000',timeline:'4-6 weeks to launch',difficulty:'Hard',
+  pain:['Every IMF tranche announcement creates uncertainty for Pakistani businesses','Companies do not know which sectors will be hit hardest by each IMF condition','By the time economic analysis is published, businesses have already made wrong decisions','No tool exists that maps IMF conditions directly to sector-level business impact in real time'],
+  benefits:['Receive sector impact reports within 2 hours of any IMF announcement','Understand which of your supply chains will be affected before it happens','Plan pricing and procurement decisions proactively instead of reactively','Get competitive intelligence on how your competitors will likely respond'],
+  whoAndWhy:[{type:'Primary Payer',who:'Large Pakistani Corporations',why:'Companies like Lucky Cement, Engro, PSO, and SSGC make billion-rupee decisions based on IMF conditions. A $2,000/month tool that provides instant impact analysis is nothing.',price:'$2,000-$5,000/month'},{type:'High Value',who:'Law and Consulting Firms',why:'McKinsey Pakistan, A.F. Ferguson, and big law firms sell IMF analysis to their clients. Your tool becomes their data source.',price:'$1,000-$3,000/month'},{type:'Enterprise',who:'International Development Organizations',why:'World Bank Pakistan, ADB, USAID Pakistan all need real-time economic impact simulation for their program planning.',price:'$5,000-$20,000/month'},{type:'Government',who:'Ministry of Finance / Planning Commission',why:'Pakistan government departments need to understand second-order effects of IMF conditions before implementing them.',price:'$10,000-$50,000/contract'}],
+  whyPay:['IMF conditions directly affect profit margins  -  companies will pay to understand them faster','No competitor tool exists for Pakistan-specific IMF impact simulation','First-mover advantage means signing long-term enterprise contracts early','One correct prediction about sector impact easily justifies annual subscription'],
+  steps:['Study the last 5 IMF announcements and their actual effects on Pakistani sectors','Build a sector-impact mapping framework using that historical data','When the next IMF announcement happens, run /last30days on it immediately','Feed into MiroFish and simulate economic behavior across 10 sectors','Send the simulation report to 5 CFOs at listed companies on PSX  -  for free the first time']},
+
+  5:{cat:'finance',catLabel:'Finance',accent:'#00d4ff',num:'05',name:'SmartIPO',tagline:'Pakistan IPO success predictor  -  forecasts whether an IPO will be oversubscribed or undersubscribed before the subscription window even opens.',accuracy:76,revenue:'$199-$999/month per subscriber',clients:'50-200 subscribers',maxMonthly:'$199,800',timeline:'2-3 weeks to launch',difficulty:'Medium',
+  pain:['PSX IPOs are a lottery  -  investors apply blindly without knowing subscription demand','Institutional investors have inside information that retail investors never access','Brokers hype every IPO regardless of actual community interest','Retail investors waste capital locked in undersubscribed IPOs for weeks'],
+  benefits:['Know before subscribing whether an IPO will be oversubscribed','Avoid locking capital in undersubscribed IPOs for 2-3 weeks','Get community sentiment score on every upcoming PSX IPO','Receive probability estimates for allotment based on predicted subscription levels'],
+  whoAndWhy:[{type:'Primary Payer',who:'PSX Retail Investors',why:'Millions of Pakistani investors participate in IPOs. Missing a 30% listing gain because you did not apply, or locking money for weeks in a flop IPO, is a real pain they will pay to avoid.',price:'$199-$299/month'},{type:'High Value',who:'IPO Brokerage Accounts',why:'Arif Habib, Meezan Investment, Foundation Securities will bundle your IPO intelligence with their brokerage accounts as a premium feature.',price:'$999-$2,000/month'},{type:'Enterprise',who:'Asset Management Companies',why:'AMCs managing mutual funds subscribe to every edge available. IPO prediction directly affects fund performance benchmarks.',price:'$2,000-$5,000/month'},{type:'Media',who:'Financial Media and Newsletters',why:'CFA Pakistan, PACRA analysts, financial bloggers will pay for exclusive IPO intelligence to share with their premium subscribers.',price:'$299-$999/month'}],
+  whyPay:['IPO allotment determines returns  -  prediction directly translates to money','No Pakistani IPO sentiment tool exists  -  first mover takes all','Missing one oversubscribed IPO listing gain easily exceeds months of subscription','Retail investors are tired of applying blindly and losing to institutional investors'],
+  steps:['Research the last 10 PSX IPOs and correlate community discussion volume with subscription levels','Build a simple scoring model: social mentions + community sentiment = subscription prediction','Apply your model to the next announced IPO using /last30days data','Publish a free prediction on Twitter and LinkedIn 2 weeks before subscription opens','Track your accuracy  -  after 3 correct predictions, start charging $199/month']},
+
+  6:{cat:'politics',catLabel:'Politics',accent:'#ff6b35',num:'06',name:'VoxPak',tagline:'Real-time political pulse  -  simulates voter behavior across all four provinces and predicts public reaction to any political event within hours.',accuracy:73,revenue:'$10,000-$50,000 per election campaign',clients:'3-8 political organizations per cycle',maxMonthly:'$400,000 per cycle',timeline:'4-6 weeks to build',difficulty:'Hard',
+  pain:['Political parties spend millions on campaigns without knowing how voters will actually react','Traditional polling in Pakistan is unreliable, expensive, and slow  -  results take weeks','PTI, PMLN, PPP all waste resources on messaging that fails because they cannot simulate public reaction','Political leaders make announcements that backfire spectacularly because no simulation was done'],
+  benefits:['Simulate voter reaction to any political statement before it is made publicly','Predict which provinces and demographics will respond positively or negatively','Test campaign messaging in a digital sandbox before spending on media','Understand how opposition moves will land with the electorate before responding'],
+  whoAndWhy:[{type:'Primary Payer',who:'Major Political Parties (PTI, PMLN, PPP)',why:'These parties spend billions on elections. $10,000-$50,000 for intelligence that could swing even one constituency is trivially cheap. They already hire consultants for less insight.',price:'$10,000-$50,000/campaign'},{type:'High Value',who:'Foreign Embassies',why:'US Embassy, UK High Commission, Chinese Embassy all need to understand Pakistani political stability. They pay for intelligence regularly.',price:'$5,000-$20,000/month'},{type:'Enterprise',who:'Multinational Companies',why:'Companies like Shell Pakistan, Total Energies need to understand political risk for their billion-dollar Pakistan investments.',price:'$3,000-$10,000/month'},{type:'Media',who:'International Media Organizations',why:'Reuters, Bloomberg, BBC Urdu will pay for data-driven political analysis to support their Pakistan coverage.',price:'$2,000-$5,000/month'}],
+  whyPay:['Election outcomes determine billion-dollar policy decisions  -  intelligence is worth millions','No Pakistani equivalent of Cambridge Analytica exists  -  massive market gap','One correct prediction of a political crisis prevents enormous business losses','Foreign organizations are already spending money on lower-quality Pakistan political intelligence'],
+  steps:['Monitor Pakistani political Twitter for 2 weeks to understand the data landscape','Run /last30days on current hot political topics: PTI arrests, PMLN decisions, etc.','Feed into MiroFish and simulate provincial voter behavior','Create a sample report on a real current political event','Contact 2 political consultants or think tanks (PILDAT, IBA CEJ) with a free demo']},
+
+  7:{cat:'politics',catLabel:'Politics',accent:'#ff6b35',num:'07',name:'DharnaMeter',tagline:'Protest prediction engine  -  predicts dharna scale, location, and duration 48-72 hours in advance using political agitation signals from Pakistani social media.',accuracy:79,revenue:'$2,000-$10,000/month per client',clients:'5-20 clients',maxMonthly:'$200,000',timeline:'2-4 weeks to launch',difficulty:'Medium',
+  pain:['Businesses near protest zones lose millions in a single dharna event','Security agencies are always caught off-guard and deploy reactively, not proactively','Media organizations miss major coverage because they have no advance warning','Supply chains through politically volatile cities get disrupted without warning'],
+  benefits:['Receive 48-72 hour advance warning before a major dharna is likely','Know predicted scale (hundreds vs tens of thousands), location, and duration','Allow businesses to prepare, delay shipments, and protect staff proactively','Give security agencies lead time to deploy resources appropriately'],
+  whoAndWhy:[{type:'Primary Payer',who:'Government Security Agencies',why:'Interior Ministry, provincial police departments spend heavily on intelligence. Predictive dharna intelligence that gives 72 hours notice is exactly what they need.',price:'$5,000-$20,000/month'},{type:'High Value',who:'Large Retail Businesses in Key Cities',why:'Imtiaz Superstore, Carrefour, and large retailers near political hotspots lose millions per dharna. $2,000/month warning service is trivial insurance.',price:'$1,000-$3,000/month'},{type:'Enterprise',who:'Logistics and Supply Chain Companies',why:'TCS, Leopard Courier, M&P Express route millions of packages through politically sensitive areas. Advance warning saves enormous operational costs.',price:'$2,000-$5,000/month'},{type:'Media',who:'News Channels',why:'ARY News, Geo TV, Dunya News compete for breaking news. 72-hour advance warning means they arrive with cameras before anyone else.',price:'$1,000-$3,000/month'}],
+  whyPay:['One dharna disruption costs a business more than a year of subscription','Government agencies have mandatory intelligence budgets  -  this fills a clear gap','News channels will pay for a competitive scoop advantage','Insurance companies will mandate this for businesses in high-risk areas'],
+  steps:['Collect data on the last 10 major dharnas and map the pre-event social media signals','Identify the specific signal patterns (hashtags, account activity, posting frequency) that preceded each dharna','Build a simple scoring algorithm: signal strength = dharna probability','Run /last30days on current political temperature in Islamabad and Lahore','Contact 3 large retailers near I-10 or Faizabad with a free 30-day pilot offer']},
+
+  8:{cat:'politics',catLabel:'Politics',accent:'#ff6b35',num:'08',name:'PolicyTest',tagline:'Government decision simulator  -  test how Pakistani citizens will react to any draft policy before it is publicly announced, at zero political risk.',accuracy:77,revenue:'$20,000-$100,000 per simulation contract',clients:'2-5 government contracts annually',maxMonthly:'$500,000 annually',timeline:'6-8 weeks to build',difficulty:'Hard',
+  pain:['Pakistani government announces policies that cause immediate public backlash and have to be reversed','Mini-budget reversals and fuel price protests cost the government enormous political capital','No mechanism exists to test policy reactions before announcements  -  everything is trial and error','International donors and lenders lose confidence when Pakistan reverses policies repeatedly'],
+  benefits:['Test any policy in a digital sandbox before announcing it publicly','Predict backlash intensity on a scale of 1-10 with regional breakdown','Identify which policy modifications reduce backlash while preserving intent','Give government a risk score for every major decision before execution'],
+  whoAndWhy:[{type:'Primary Payer',who:'Federal Ministries',why:'Ministry of Finance, Energy, and Planning Commission make decisions worth trillions. $50,000 to test a policy that affects millions of people is a rounding error in their budget.',price:'$20,000-$100,000/contract'},{type:'High Value',who:'Provincial Governments',why:'Punjab, Sindh, KPK, and Balochistan governments each run independent policy programs. They need local sentiment simulation, not national averages.',price:'$10,000-$50,000/contract'},{type:'Enterprise',who:'World Bank & ADB Pakistan Programs',why:'These organizations condition billions in loans on successful policy implementation. They will fund policy simulation tools to protect their investments.',price:'$50,000-$200,000/year'},{type:'International',who:'USAID & UK FCDO Pakistan Programs',why:'Western governments fund governance improvement in Pakistan. A policy testing tool directly serves their governance reform agenda.',price:'$30,000-$100,000/project'}],
+  whyPay:['One reversed policy costs more political capital than years of simulation fees','International lenders require evidence of policy impact assessment  -  this provides it','No competitor offers AI-powered Pakistan-specific policy simulation','Governments globally are adopting civic AI tools  -  Pakistan will follow'],
+  steps:['Select a recent controversial Pakistani policy announcement as a case study','Retroactively simulate it using /last30days historical data and MiroFish','Show how your simulation would have predicted the actual public backlash','Create a polished PDF case study report','Submit to Planning Commission of Pakistan and World Bank Pakistan as unsolicited intelligence  -  they will contact you']},
+
+  9:{cat:'politics',catLabel:'Politics',accent:'#ff6b35',num:'09',name:'ElectionOracle',tagline:'Seat-by-seat Pakistan election predictor  -  delivers constituency-level forecasts with confidence scores, beating traditional polling accuracy.',accuracy:71,revenue:'$50,000-$200,000 per election cycle',clients:'2-4 major clients per election',maxMonthly:'$800,000 per election',timeline:'8-12 weeks to build',difficulty:'Very Hard',
+  pain:['Traditional Pakistan polling is notoriously inaccurate and easily manipulated','Political parties waste billions on the wrong constituencies based on bad polling data','International observers have no reliable seat prediction for Pakistan elections','Media organizations run purely speculative election coverage due to lack of data'],
+  benefits:['Get constituency-level seat predictions updated in real time as campaign progresses','Identify swing constituencies where targeted spending will have maximum impact','Track momentum shifts across provinces as election day approaches','Provide media organizations with data-driven election night projections'],
+  whoAndWhy:[{type:'Primary Payer',who:'Major Political Parties',why:'Elections are fought and won at the constituency level. Parties spend billions on campaigns  -  knowing exactly where to focus resources is worth $200,000 easily.',price:'$50,000-$200,000/election'},{type:'High Value',who:'Election Commission of Pakistan',why:'ECP needs credible third-party forecasting to manage logistics, security deployment, and public expectations around results.',price:'$50,000-$200,000/election'},{type:'Enterprise',who:'International Election Observers',why:'EU Election Observation Mission, UNDP Electoral Support  -  these organizations are funded to ensure credible elections and pay for credible data.',price:'$30,000-$100,000/election'},{type:'Media',who:'ARY News, Geo TV, Dawn',why:'Election night coverage requires live predictions. Networks pay enormous fees for data that drives their prime-time election broadcasts.',price:'$20,000-$100,000/election'}],
+  whyPay:['Election outcomes determine billions in government contracts  -  intelligence is worth millions','No credible data-driven seat predictor exists for Pakistan  -  massive gap','International funding is specifically available for election integrity tools','Media organizations budget heavily for election night data packages'],
+  steps:['Analyze historical constituency-level voting data combined with social media data','Map Twitter and Facebook political discourse to specific constituencies using geotagging','Run /last30days on current political sentiment by region','Use MiroFish to simulate voter behavior in 10 sample constituencies','Approach Dawn or Geo TV with a free prediction model for the next by-election']},
+
+  10:{cat:'politics',catLabel:'Politics',accent:'#ff6b35',num:'10',name:'DiplomacyRadar',tagline:'Monitors Pak-India, Pak-USA, and Pak-China relations across social media and news sources, predicting diplomatic tensions and their cascading business impact.',accuracy:68,revenue:'$5,000-$20,000/month per client',clients:'5-15 enterprise clients',maxMonthly:'$300,000',timeline:'6-8 weeks to build',difficulty:'Hard',
+  pain:['Multinational companies operating in Pakistan cannot predict when a diplomatic crisis will affect their business','Trade disruptions between Pakistan and key partners happen suddenly without early warning','Businesses do not know whether to stockpile imports or delay investments during diplomatic uncertainty','No affordable geopolitical risk intelligence exists specifically for Pakistan context'],
+  benefits:['Receive early warnings 1-3 weeks before diplomatic crises affect business operations','Get business impact scores for different diplomatic scenarios','Understand how specific events will affect import/export, investment, and operational risk','Align business planning with geopolitical probability forecasts'],
+  whoAndWhy:[{type:'Primary Payer',who:'Multinational Companies (Nestle, Shell, Unilever Pakistan)',why:'Companies with billions invested in Pakistan need geopolitical risk intelligence. They already pay expensive global firms  -  you offer Pakistan-specific intelligence they cannot get elsewhere.',price:'$5,000-$15,000/month'},{type:'High Value',who:'Foreign Embassies and High Commissions',why:'Every foreign embassy has an intelligence and economic section with significant budget for local political risk monitoring.',price:'$5,000-$20,000/month'},{type:'Enterprise',who:'International Banks Operating in Pakistan',why:'Standard Chartered, Deutsche Bank, and Citi Pakistan need geopolitical risk assessment for their Pakistan portfolios.',price:'$3,000-$10,000/month'},{type:'International',who:'Political Risk Insurance Companies',why:'Companies like Willis Towers Watson and Marsh provide political risk insurance to companies operating in Pakistan  -  they need your intelligence for underwriting.',price:'$10,000-$50,000/year'}],
+  whyPay:['One prevented supply chain disruption saves more than years of subscription fees','Global political risk firms charge 10x more for less Pakistan-specific insight','Diplomatic crises in Pakistan happen frequently  -  demand for this intelligence is constant','Insurance companies have compliance requirements to assess and document political risk'],
+  steps:['Monitor Pak-India, Pak-China, and Pak-USA Twitter discourse for 2 weeks using /last30days','Map historical diplomatic events to their business impact on Pakistani sectors','Build a geopolitical tension score updated daily from social media signals','Send a free weekly Pakistan diplomatic risk brief to 10 CFOs at multinational companies in Pakistan','Offer a free 30-day trial  -  convert to $5,000/month after demonstrating value']},
+
+  11:{cat:'business',catLabel:'Business',accent:'#a78bfa',num:'11',name:'BrandShield',tagline:'Pakistani brand crisis prevention  -  continuously monitors social media to predict boycott campaigns 24-48 hours before they explode, giving brands time to respond.',accuracy:85,revenue:'$1,000-$5,000/month per brand',clients:'20-50 brands',maxMonthly:'$250,000',timeline:'2-3 weeks to launch',difficulty:'Medium',
+  pain:['Pakistani brands get destroyed overnight by social media boycotts  -  Junaid Jamshed, various food brands, many have lost millions','Brand crisis response in Pakistan is always reactive  -  by the time PR teams act, the boycott has already gone viral','FMCG companies spend millions on brand building that can be wiped out in 24 hours','No early warning system exists to detect a brewing boycott before it trends'],
+  benefits:['Get 24-48 hour advance warning before a brand boycott campaign goes viral','Receive daily brand sentiment scores across all major Pakistani social platforms','Identify the specific trigger posts or accounts starting negative campaigns early','Have time to issue an apology, correction, or counter-narrative before crisis peaks'],
+  whoAndWhy:[{type:'Primary Payer',who:'FMCG Companies (Unilever, P&G, Nestle Pakistan)',why:'These companies have brand values worth billions and marketing budgets in the hundreds of millions. $3,000/month for crisis prevention is trivial brand insurance.',price:'$2,000-$5,000/month'},{type:'High Value',who:'Telecom Companies (Jazz, Telenor, Zong)',why:'Telecom brands face constant social media backlash. They have large marketing budgets and already pay PR agencies much more than $3,000/month.',price:'$3,000-$5,000/month'},{type:'Enterprise',who:'Pakistani Banks (HBL, MCB, UBL, Meezan)',why:'Bank brand reputation is directly linked to customer trust and deposits. A single viral story about a bank can trigger a run on deposits.',price:'$3,000-$10,000/month'},{type:'Growing',who:'E-commerce Brands and Local Startups',why:'Daraz sellers, local clothing brands, and food startups are increasingly vulnerable to social media backlash. Even $500/month protection is invaluable.',price:'$500-$1,000/month'}],
+  whyPay:['One prevented boycott saves millions  -  one month of subscription fees is nothing by comparison','PR agencies charge 5-10x more for worse, slower crisis monitoring','Brand managers are personally accountable for crises  -  they will pay to protect their jobs','Boycott campaigns in Pakistan happen monthly  -  this is not a theoretical risk'],
+  steps:['Set up /last30days to monitor brand sentiment for 5 well-known Pakistani brands','Use MiroFish to simulate how a negative post spreads through Pakistani social networks','Create a sample BrandShield report for a hypothetical brand crisis scenario','Contact the Head of Corporate Communications at any Pakistani FMCG company on LinkedIn','Offer a free 30-day pilot  -  show them 3 negative sentiment signals you detected about their brand during the trial']},
+
+  12:{cat:'business',catLabel:'Business',accent:'#a78bfa',num:'12',name:'LaunchLens',tagline:'Product launch simulator  -  predicts how Pakistani customers will react to a new product, pricing, and marketing strategy before spending a single rupee.',accuracy:78,revenue:'$5,000-$20,000 per simulation',clients:'10-30 companies annually',maxMonthly:'$600,000 annually',timeline:'3-4 weeks to build',difficulty:'Medium',
+  pain:['Pakistani companies launch products that fail within 6 months because they never validated market response','FMCG companies in Pakistan spend PKR 50-200 million on launches that underperform because there was no simulation','Pricing decisions are made based on gut feeling rather than community sentiment data','Marketing agencies take client money for campaigns without predicting success probability'],
+  benefits:['Simulate Pakistani consumer reaction to any product concept before spending on production','Test multiple pricing options to find the optimal price point for Pakistani market','Predict which marketing messages will resonate most with your target demographic','Reduce new product failure rate from the industry average of 70% to below 30%'],
+  whoAndWhy:[{type:'Primary Payer',who:'FMCG Companies',why:'Companies like Shan Foods, National Foods, Tapal Tea launch dozens of products every year. At PKR 50M per launch, even one prevented failure covers years of LaunchLens fees.',price:'$10,000-$20,000/simulation'},{type:'High Value',who:'Marketing Agencies',why:'Ogilvy Pakistan, IAL Saatchi, BBDO  -  agencies that use LaunchLens can offer clients a measurable success probability, charging a premium and differentiating their service.',price:'$5,000-$15,000/campaign'},{type:'Enterprise',who:'Multinational Product Launches',why:'P&G, Unilever, Reckitt Pakistan launch global products in Pakistan. Local sentiment simulation before global product adaptation saves enormous localization costs.',price:'$15,000-$30,000/launch'},{type:'Growing',who:'Pakistani Startups and SMEs',why:'Startup founders and SME owners who have scraped together PKR 5-10 million for a product launch cannot afford to fail. $1,000 simulation saves everything.',price:'$1,000-$3,000/simulation'}],
+  whyPay:['Product failure is catastrophic  -  a 78% accurate simulation drastically changes the odds','Marketing agencies can charge clients more when they offer predictive validation','No comparable Pakistan-specific product simulation tool exists','PKR/USD exchange rate means $5,000 feels like a tiny fraction of a typical launch budget'],
+  steps:['Pick a recently launched Pakistani product that failed and retroactively simulate it','Show how /last30days + MiroFish would have predicted its failure 3 months in advance','Create a case study PDF with the simulation vs actual outcome','Contact 5 product managers at FMCG companies via LinkedIn with the case study','Offer your first simulation at 50% discount  -  once they see results they will pay full price']},
+
+  13:{cat:'business',catLabel:'Business',accent:'#a78bfa',num:'13',name:'RealEstate Oracle',tagline:'Predicts DHA, Bahria Town, and key property market price surges 3-6 months before they happen using real investor community signals.',accuracy:74,revenue:'$299-$999/month per subscriber',clients:'100-500 subscribers',maxMonthly:'$499,500',timeline:'3-5 weeks to launch',difficulty:'Medium',
+  pain:['Pakistan property investors miss major price surges because they get information too late','DHA and Bahria Town prices often jump 20-30% before small investors even hear about the opportunity','No affordable real-time property sentiment monitoring tool exists for Pakistani retail investors','Property agents give biased advice driven by commission rather than objective market intelligence'],
+  benefits:['Get community sentiment signals on specific property zones 3-6 months before price surges','Monitor which DHA phases and Bahria Town blocks are gaining investor interest','Track NRP (Non-Resident Pakistani) investment patterns and their impact on prices','Receive weekly property intelligence reports powered by real community discussions'],
+  whoAndWhy:[{type:'Primary Payer',who:'Individual Property Investors',why:'Millions of Pakistanis invest in property. Missing a 25% price surge because you did not have early intelligence costs far more than $299/month.',price:'$299-$499/month'},{type:'High Value',who:'Real Estate Companies (Zameen, Graana, OLX Property)',why:'These platforms have millions of users who would pay premium for investment intelligence. They can bundle your tool with their platform subscriptions.',price:'$999-$2,000/month'},{type:'Enterprise',who:'Property Development Companies',why:'DHA, Bahria Town, and private developers need to understand investor sentiment to price new launches optimally. They make billions  -  intelligence costs nothing.',price:'$3,000-$10,000/month'},{type:'International',who:'Non-Resident Pakistani (NRP) Investment Groups',why:'Pakistani diaspora in UK, USA, UAE collectively invest billions in Pakistan property annually. They have disposable income and will pay for reliable intelligence.',price:'$499-$999/month'}],
+  whyPay:['One correct prediction adds hundreds of thousands in property value  -  $299/month is trivial','Pakistani NRPs are highly motivated to invest optimally given limited direct market access','Property agents are not trusted  -  independent AI intelligence has huge perceived value','Real estate is the #1 investment vehicle in Pakistan  -  demand for intelligence is massive'],
+  steps:['Run /last30days on "DHA Lahore" "Bahria Town Karachi" "Pakistan property investment" this week','Map community discussion volume and sentiment to historical price movements','Build a simple property heat map showing which areas are gaining discussion momentum','Post weekly insights on LinkedIn targeting Pakistani property investors','Offer free access for 30 days  -  convert to $299/month after subscribers see 2-3 accurate predictions']},
+
+  14:{cat:'business',catLabel:'Business',accent:'#a78bfa',num:'14',name:'StartupValidator',tagline:'Validates any Pakistani startup idea in 48 hours using real community intelligence  -  delivers a go/no-go report that saves founders months of wasted effort.',accuracy:81,revenue:'$200-$500 per report',clients:'20-100 reports monthly',maxMonthly:'$50,000',timeline:'1 week to first revenue',difficulty:'Easy',
+  pain:['Pakistani startup founders waste 12-18 months building products nobody wants  -  Airlift, Jugnu are famous examples','Traditional market research in Pakistan takes months and costs millions','Accelerators and investors reject startups at pitch stage because founders have no real validation data','Founders rely on friends and family feedback which is always biased and unreliable'],
+  benefits:['Get a go/no-go validation report for your startup idea in 48 hours','See actual community discussion data proving whether the pain point is real','Understand who your actual customer is based on real community profiles','Identify competitors and their weaknesses based on community complaints'],
+  whoAndWhy:[{type:'Primary Payer',who:'First-Time Startup Founders',why:'Someone about to quit their job and invest their savings into a startup idea will easily pay $300 for a data-driven validation report. The alternative is risking everything.',price:'$200-$300/report'},{type:'High Value',who:'Startup Accelerators (NIC, DICE, Plan9)',why:'Accelerators evaluate hundreds of applications. A standardized validation report for every applicant saves enormous mentor time and improves selection quality.',price:'$100-$200/report x volume'},{type:'Enterprise',who:'Venture Capital Firms (IVC, Zayn Capital)',why:'VCs spend months doing due diligence. A $300 community validation report as a first filter before deep due diligence saves enormous partner time.',price:'$300-$500/report'},{type:'Corporate',who:'Corporate Innovation Labs (Jazz X, Engro Innovation)',why:'Large companies exploring new business ventures use expensive McKinsey-style validation. Your tool provides comparable insight at 1% of the cost.',price:'$500-$2,000/report'}],
+  whyPay:['$300 to validate an idea before quitting your job and investing savings is obviously worth it','Accelerators and VCs waste enormous time on bad ideas  -  validation filters these out early','No Pakistani startup validation service currently exists using real community data','The alternative (months of manual research) costs 100x more in time and money'],
+  steps:['Pick any popular startup idea currently being discussed in Pakistani tech circles','Run /last30days on that topic right now  -  takes 2-8 minutes','Write a 5-page validation report using the output: pain point, community size, competition, sentiment','Post on LinkedIn: "I validated a startup idea in 48 hours  -  here is how"','Offer the first 3 reports free in exchange for testimonials, then charge $300 per report']},
+
+  15:{cat:'business',catLabel:'Business',accent:'#a78bfa',num:'15',name:'RamadanPredict',tagline:'Seasonal behavior simulator  -  predicts Ramadan price spikes, product demand surges, and charity trends weeks before Ramadan begins across Pakistan.',accuracy:88,revenue:'$500-$2,000 per Ramadan season report',clients:'50-200 businesses annually',maxMonthly:'$400,000 annually',timeline:'3-4 weeks to build',difficulty:'Easy',
+  pain:['Retailers run out of stock on high-demand Ramadan items every year because they underestimate demand','Food companies misjudge which products will trend in Ramadan and overproduce the wrong SKUs','Charity organizations launch campaigns too late and miss peak giving momentum','Restaurant and iftar deal businesses price too low or too high due to no predictive data'],
+  benefits:['Know which food categories will surge in demand 4-6 weeks before Ramadan','Predict charity campaign performance and optimize donation appeal messaging','Understand price elasticity for iftar products based on community sentiment','Get a week-by-week Ramadan demand forecast for your specific product category'],
+  whoAndWhy:[{type:'Primary Payer',who:'Retail Chains (Imtiaz, Carrefour, Metro)',why:'These chains stock billions in inventory for Ramadan. Getting demand forecasting even 20% more accurate saves tens of millions in overstock and stockout losses.',price:'$1,000-$2,000/season'},{type:'High Value',who:'FMCG Food Companies',why:'Shan, National, Tapal, Knorr all launch Ramadan-specific SKUs. Accurate demand forecasting directly affects production planning for millions of units.',price:'$1,500-$3,000/season'},{type:'Enterprise',who:'Islamic Finance and Banking (Meezan Bank, BankIslami)',why:'These banks run major Ramadan campaigns for Islamic financial products. Community sentiment prediction optimizes their campaign timing and messaging.',price:'$2,000-$5,000/season'},{type:'Growing',who:'Charity Organizations (Edhi, Shaukat Khanum, JDC)',why:'Charities raise hundreds of millions in Ramadan. Predicting peak giving moments and optimal messaging timing can increase donations by 20-30%.',price:'$500-$1,000/season'}],
+  whyPay:['Ramadan is a predictable annual event  -  preparation is everything in retail','88% accuracy means demand forecasting is genuinely reliable for planning purposes','The cost of one stockout or overstock event dwarfs the cost of the report','Every year the same planning mistakes are repeated  -  this tool breaks the cycle'],
+  steps:['Collect last 3 years of Ramadan Twitter and Facebook discussion data from Pakistan','Build a demand curve model by product category based on community discussion volume','Run /last30days on "Ramadan Pakistan 2026" 8 weeks before the expected start date','Feed into MiroFish to simulate consumer buying behavior week by week','Contact the buying manager at Imtiaz Superstore with a free sample 2026 Ramadan demand forecast']},
+
+  16:{cat:'health',catLabel:'Health',accent:'#00ff88',num:'16',name:'DengueDefense',tagline:'Disease outbreak early warning system  -  predicts dengue, cholera, and polio hotspots across Pakistani cities 3-4 weeks before they peak.',accuracy:82,revenue:'$10,000-$50,000/month per province',clients:'4-8 provincial clients',maxMonthly:'$400,000',timeline:'6-8 weeks to build',difficulty:'Hard',
+  pain:['Pakistan loses thousands of lives every year to dengue, cholera, and other preventable outbreaks','Health departments always react after the outbreak peaks  -  never before it begins','Spray campaigns, hospital preparations, and public warnings always come too late','International health organizations fund Pakistan health programs but have no local early warning data'],
+  benefits:['Predict outbreak hotspots 3-4 weeks before community reports confirm them','Enable proactive deployment of spray teams, medical supplies, and health workers','Give public health messaging campaigns time to reach vulnerable communities before peak','Reduce outbreak mortality by converting reactive response to proactive prevention'],
+  whoAndWhy:[{type:'Primary Payer',who:'Provincial Health Departments (Punjab, Sindh, KPK)',why:'Each province has a health budget in the billions. They already spend hundreds of millions reacting to outbreaks. $20,000/month for prevention is trivial insurance.',price:'$10,000-$30,000/month'},{type:'High Value',who:'WHO Pakistan Office',why:'WHO has an annual Pakistan country budget specifically for disease surveillance. Your system directly serves their mandate and integrates with their global monitoring.',price:'$20,000-$100,000/year'},{type:'Enterprise',who:'UNICEF Pakistan',why:'UNICEF runs child health programs across Pakistan and funds disease prevention directly. Outbreak prediction protects their program investments.',price:'$20,000-$100,000/year'},{type:'International',who:'USAID Health Programs in Pakistan',why:'USAID funds multiple health security programs in Pakistan. Early warning systems are a core deliverable of these programs.',price:'$50,000-$200,000/project'}],
+  whyPay:['International health organizations have compliance requirements for disease surveillance  -  this fulfills them','Government health departments face political accountability for outbreaks  -  prevention tools protect officials','USAID and WHO have allocated budgets specifically for health intelligence systems','Cost of one missed outbreak response (treatments, hospitalizations, deaths) vastly exceeds tool cost'],
+  steps:['Collect Twitter and Facebook data from Pakistani cities mentioning dengue, fever, illness symptoms','Map social media complaint density to historical outbreak locations and timing','Build a predictive model showing how community complaints precede official case counts by 3-4 weeks','Create a demo showing how you would have predicted the 2024 Lahore dengue outbreak 4 weeks early','Submit a proposal to the Punjab Health Department or WHO Pakistan office with your demo case study']},
+
+  17:{cat:'health',catLabel:'Health',accent:'#00ff88',num:'17',name:'MentalHealthPulse',tagline:'Identifies Pakistani communities at highest mental health risk by simulating how distress, anxiety, and crisis signals spread through social networks.',accuracy:70,revenue:'$5,000-$20,000/month per client',clients:'3-10 organizations',maxMonthly:'$200,000',timeline:'6-10 weeks to build',difficulty:'Hard',
+  pain:['Pakistan has a severe mental health crisis that is largely invisible to health authorities','Suicide rates in Pakistan are rising but there is no early detection system for at-risk communities','Mental health NGOs operate blindly without knowing which communities need intervention most urgently','International organizations fund mental health programs in Pakistan without knowing where to target them'],
+  benefits:['Identify which districts and demographics are showing highest mental health distress signals','Predict where mental health crises will escalate before they become emergencies','Optimize NGO intervention targeting to communities that need help most urgently','Provide government health departments with a heat map of mental health risk across Pakistan'],
+  whoAndWhy:[{type:'Primary Payer',who:'Mental Health NGOs (Umang, Rozan, The Recovery House)',why:'These organizations have limited budgets and need to maximize intervention impact. Knowing exactly where to deploy counselors and resources is invaluable.',price:'$1,000-$3,000/month'},{type:'High Value',who:'WHO Pakistan Mental Health Division',why:'WHO tracks mental health indicators globally. Pakistan-specific AI-powered detection directly serves their mandate and existing program infrastructure.',price:'$10,000-$50,000/year'},{type:'Enterprise',who:'UNICEF Pakistan Child Protection',why:'Child mental health is a UNICEF priority in Pakistan. Predictive tools that identify at-risk youth communities align with their existing funding mandates.',price:'$20,000-$100,000/year'},{type:'Corporate',who:'HR Departments of Large Pakistani Corporations',why:'With 50,000+ employees, companies like PTCL, Pakistan Railways, and government departments need workforce mental health monitoring at scale.',price:'$2,000-$5,000/month'}],
+  whyPay:['International health funding is specifically allocated for mental health detection and prevention in Pakistan','NGOs are under pressure from donors to demonstrate measurable community impact  -  this provides it','Corporations have legal obligations to employee mental health  -  monitoring tools fulfill these','Suicide and mental health crises create enormous social and economic costs that prediction prevents'],
+  steps:['Map Pakistani mental health discussion patterns on Twitter, Reddit, and Facebook over 6 months','Identify the linguistic signals and behavioral patterns that precede community mental health crises','Build a pilot dashboard showing mental health risk scores by city and demographic','Approach Umang Pakistan or The Recovery House with a free 3-month pilot offer','Publish anonymized research findings to attract WHO/UNICEF attention and credibility']},
+
+  18:{cat:'health',catLabel:'Health',accent:'#00ff88',num:'18',name:'MisinfoShield',tagline:'Detects viral misinformation 24-48 hours before it spreads across Pakistani social media and simulates exactly which communities will be most affected.',accuracy:83,revenue:'$5,000-$20,000/month per client',clients:'3-8 organizations',maxMonthly:'$160,000',timeline:'4-6 weeks to build',difficulty:'Medium',
+  pain:['Pakistan is one of the world\'\2 most vulnerable countries to viral misinformation  -  WhatsApp-driven false news causes riots, lynchings, and political crises','PEMRA and government bodies are always days behind misinformation by the time they respond','NGOs and fact-checking organizations lack AI-powered tools to prioritize which claims to investigate','Brands get swept up in false information campaigns they had no warning about'],
+  benefits:['Receive 24-48 hour alerts when new misinformation is gaining early traction in Pakistani networks','Know which specific WhatsApp groups and Twitter accounts are amplifying false claims','Predict geographic spread: which cities and provinces will see this misinformation peak first','Give fact-checkers, government, and brands a head start to counter false narratives proactively'],
+  whoAndWhy:[{type:'Primary Payer',who:'PEMRA (Pakistan Electronic Media Regulatory Authority)',why:'PEMRA has a legal mandate to monitor media content including digital platforms. A predictive misinformation tool directly serves their regulatory function.',price:'$5,000-$20,000/month'},{type:'High Value',who:'Dawn, Geo, ARY Fact-Check Desks',why:'Major news organizations have fact-checking units that need to prioritize which claims to investigate. AI triage saves enormous journalist time.',price:'$2,000-$5,000/month'},{type:'Enterprise',who:'UNDP Pakistan and International NGOs',why:'UNDP runs democratic governance programs in Pakistan that include information integrity components. Misinformation detection tools directly serve these programs.',price:'$10,000-$50,000/year'},{type:'Corporate',who:'Brand Reputation Managers at Major Pakistani Companies',why:'False viral stories about products or executives can destroy brands overnight. BrandShield + MisinfoShield is a powerful combined offering.',price:'$2,000-$5,000/month'}],
+  whyPay:['Pakistani misinformation causes real violence and political instability  -  prevention has enormous social value','PEMRA has legal budget allocated for digital monitoring  -  they are looking for tools exactly like this','International media integrity funds (Meta, Google, USAID) specifically fund misinformation tools in high-risk countries like Pakistan','Brands have learned the hard way that false viral stories cost millions  -  they will pay for early warning'],
+  steps:['Identify 5 major Pakistani misinformation events from the past year and analyze their early spread patterns','Build a misinformation velocity scoring model using /last30days signal data','Simulate how a hypothetical false claim would spread using MiroFish agent behavior','Create a detection report for a real, recent piece of misinformation  -  show you detected it 36 hours before it peaked','Submit to PEMRA as an unsolicited capability demonstration  -  government regulators actively seek these tools']},
+
+  19:{cat:'health',catLabel:'Health',accent:'#00ff88',num:'19',name:'FloodRisk Sim',tagline:'Simulates population displacement and resource demand to predict which Pakistani areas need evacuation and aid deployment 1-2 weeks before flooding peaks.',accuracy:80,revenue:'$20,000-$100,000 per annual contract',clients:'2-5 government/international contracts',maxMonthly:'$500,000 annually',timeline:'8-12 weeks to build',difficulty:'Hard',
+  pain:['Pakistan\'\2 2022 floods displaced 33 million people  -  disaster response was chaotic and reactive','NDMA deploys resources after flooding begins, not before  -  leading to preventable deaths','International aid organizations coordinate poorly because there is no shared predictive intelligence layer','Climate change is making Pakistan floods more frequent and more severe every year'],
+  benefits:['Predict which districts will face flooding 10-14 days before peak based on community reports and climate signals','Simulate population displacement patterns to pre-position evacuation transport and relief camps','Optimize aid resource allocation across provinces based on predicted need severity','Provide a unified intelligence layer that all responders  -  government, UN, NGOs  -  share'],
+  whoAndWhy:[{type:'Primary Payer',who:'NDMA (National Disaster Management Authority)',why:'NDMA has a large annual budget for disaster preparedness and response. Predictive tools that save lives and reduce response costs align perfectly with their mandate.',price:'$30,000-$100,000/year'},{type:'High Value',who:'UNDP Pakistan Crisis Prevention',why:'UNDP funds disaster resilience in Pakistan through multi-year programs. A flood prediction tool directly serves their Sendai Framework commitments.',price:'$50,000-$200,000/year'},{type:'Enterprise',who:'World Food Programme Pakistan',why:'WFP pre-positions food in flood-prone areas. Accurate 2-week predictions allow them to dramatically reduce the cost of emergency food delivery.',price:'$30,000-$100,000/year'},{type:'International',who:'UK FCDO and USAID Disaster Response Programs',why:'Western donors fund disaster preparedness specifically in Pakistan due to its extreme climate vulnerability. Predictive AI tools are exactly what they fund.',price:'$50,000-$200,000/project'}],
+  whyPay:['2022 floods cost Pakistan $30 billion in damages  -  even 5% improvement in preparedness justifies millions in tool investment','International disaster funding specifically requires evidence-based early warning systems','NDMA faces political accountability for flood deaths  -  predictive tools protect officials','UN agencies have compliance requirements for early warning integration in their Pakistan programs'],
+  steps:['Collect data from the 2022 and 2023 Pakistan floods: social media patterns, river levels, community reports','Build a model showing how community discussion intensity preceded peak flooding by 10-14 days','Create a pilot showing your prediction accuracy retroactively on one historical flood event','Submit a proposal to UNDP Pakistan Crisis Prevention Unit with your case study','Simultaneously approach USAID Pakistan for disaster resilience program funding  -  they actively fund this category']},
+
+  20:{cat:'health',catLabel:'Health',accent:'#00ff88',num:'20',name:'SupplyChainSense',tagline:'Monitors global and Pakistani supply chain signals to predict raw material shortages 4-8 weeks before they hit Pakistani manufacturers.',accuracy:76,revenue:'$2,000-$10,000/month per manufacturer',clients:'10-40 manufacturers',maxMonthly:'$400,000',timeline:'4-5 weeks to build',difficulty:'Medium',
+  pain:['Pakistani manufacturers regularly face raw material shortages that halt production lines','Import-dependent industries like pharmaceuticals, textiles, and food processing suffer supply shocks with no warning','Dollar availability crises block material imports but companies have no advance intelligence on when this will happen','Supply chain disruptions post-COVID and post-rupee devaluation have made Pakistani manufacturing extremely fragile'],
+  benefits:['Get 4-8 week advance warning on raw material shortages specific to your industry','Monitor global supply chain disruption signals that will hit Pakistan before they arrive','Optimize procurement timing to avoid price spikes by ordering before shortage signals peak','Build a 90-day supply buffer strategy based on predictive shortage data'],
+  whoAndWhy:[{type:'Primary Payer',who:'Pharmaceutical Companies (Getz Pharma, AGP, Sanofi Pakistan)',why:'Medicine shortages in Pakistan have become a national crisis. Pharmaceutical companies that can predict and pre-stock raw materials gain enormous competitive advantage.',price:'$3,000-$10,000/month'},{type:'High Value',who:'Textile Manufacturers (Lucky Textile, Gul Ahmed, Interloop)',why:'Pakistan\'\2 textile industry earns billions in exports. Supply chain disruptions that halt production cost more per day than months of monitoring subscription.',price:'$2,000-$5,000/month'},{type:'Enterprise',who:'Food Processing Companies (Engro Foods, Nestle Pakistan)',why:'These companies run just-in-time supply chains for perishable products. Advance shortage warning allows buffer stocking that prevents production stops.',price:'$3,000-$8,000/month'},{type:'Growing',who:'Construction Material Suppliers',why:'Steel, cement, and construction material prices are highly volatile. Importers who predict shortages before they hit can stockpile at low prices.',price:'$1,000-$3,000/month'}],
+  whyPay:['One prevented production halt saves more than a year of subscription fees','Pakistan\'\2 import dependence makes supply chain intelligence unusually valuable versus peer markets','No Pakistani supply chain early warning system currently exists  -  first mover advantage','CFOs are mandated to manage supply chain risk  -  this tool gives them a defensible process'],
+  steps:['Monitor global supply chain discussion on Reddit, HN, and industry Twitters for Pakistan-relevant materials','Track dollar availability signals, SBP import restriction discussions, and shipping cost trends','Build a shortage probability score for 20 key imported raw materials used in Pakistan','Send a free sample shortage forecast to 5 Pakistani pharmaceutical CFOs on LinkedIn','Offer a free 60-day pilot  -  after first accurate prediction, convert to $3,000/month paid contract']}
+};
+
+function getAccentForCat(cat){return{finance:'#00d4ff',politics:'#ff6b35',business:'#a78bfa',health:'#00ff88'}[cat]||'#00d4ff';}
+function getDiffDots(diff){var map={Easy:1,Medium:2,Hard:3,'Very Hard':3};return map[diff]||2;}
+
+function openModal(id){
+  var d=ideas[id];if(!d)return;
+  var accent=d.accent;
+  var modal=document.getElementById('modal');
+  var catColors={finance:'ct-f',politics:'ct-p',business:'ct-b',health:'ct-h'};
+  modal.className='modal '+d.cat;
+
+  var diffDots=getDiffDots(d.difficulty);
+  var dotsHtml='';
+  for(var i=1;i<=3;i++){dotsHtml+='<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:'+(i<=diffDots?accent:'#1a2535')+';margin-right:3px"></span>';}
+
+  document.getElementById('modal-top').innerHTML=
+    '<span class="cat-tag '+catColors[d.cat]+'" style="margin-bottom:10px">'+d.catLabel+'</span>'+
+    '<div class="modal-title" style="color:'+accent+'">'+d.name+'</div>'+
+    '<div class="modal-tagline">'+d.tagline+'</div>'+
+    '<div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap">'+
+      '<span style="font-family:monospace;font-size:11px;padding:4px 10px;border-radius:4px;background:rgba(255,255,255,.04);border:1px solid #1a2535;color:#64748b">Idea #'+d.num+'</span>'+
+      '<span style="font-family:monospace;font-size:11px;padding:4px 10px;border-radius:4px;background:rgba(255,255,255,.04);border:1px solid #1a2535;color:#64748b">'+d.difficulty+' to Build</span>'+
+      '<span style="font-family:monospace;font-size:11px;padding:4px 10px;border-radius:4px;background:rgba(255,255,255,.04);border:1px solid #1a2535;color:'+accent+'">'+d.accuracy+'% Prediction Accuracy</span>'+
+      '<span style="font-family:monospace;font-size:11px;padding:4px 10px;border-radius:4px;background:rgba(255,255,255,.04);border:1px solid #1a2535;color:#64748b">⚡ '+d.timeline+'</span>'+
+    '</div>';
+
+  var painItems=d.pain.map(function(p){return'<li>'+p+'</li>';}).join('');
+  var benefitItems=d.benefits.map(function(b){return'<li>'+b+'</li>';}).join('');
+  var stepItems=d.steps.map(function(s,i){return'<div class="step"><div class="step-num" style="background:'+accent+'22;border:1px solid '+accent+'44;color:'+accent+'">'+(i+1)+'</div><div class="step-content"><div class="step-desc">'+s+'</div></div></div>';}).join('');
+  var payerCardsHtml=d.whoAndWhy.map(function(p){return'<div class="pcard"><div class="pcard-type" style="color:'+accent+'">'+p.type+'</div><div class="pcard-who">'+p.who+'</div><div class="pcard-why">'+p.why+'</div><div class="pcard-price">'+p.price+'</div></div>';}).join('');
+  var whyPayHtml=d.whyPay.map(function(w){return'<div class="wbox"><div class="wbox-ico">💡</div><div class="wbox-desc">'+w+'</div></div>';}).join('');
+
+  document.getElementById('modal-body').innerHTML=
+    '<div class="msec"><div class="msec-title">Accuracy Score</div>'+
+      '<div class="acc-row"><div class="acc-big-bar"><div class="acc-big-fill" style="width:'+d.accuracy+'%;background:'+accent+'"></div></div><div class="acc-big-val" style="color:'+accent+'">'+d.accuracy+'%</div></div>'+
+    '</div>'+
+
+    '<div class="msec"><div class="msec-title">💰 Profit Potential</div>'+
+      '<div class="profit-grid">'+
+        '<div class="pbox"><div class="pbox-lbl">Revenue Per Client</div><div class="pbox-val">'+d.revenue+'</div></div>'+
+        '<div class="pbox"><div class="pbox-lbl">Potential Clients</div><div class="pbox-val">'+d.clients+'</div></div>'+
+        '<div class="pbox"><div class="pbox-lbl">Maximum Monthly</div><div class="pbox-val">'+d.maxMonthly+'</div></div>'+
+      '</div>'+
+    '</div>'+
+
+    '<div class="msec"><div class="msec-title">⚠️ Pain Points This Solves</div>'+
+      '<ul class="pain-list">'+painItems+'</ul>'+
+    '</div>'+
+
+    '<div class="msec"><div class="msec-title">✅ Key Benefits</div>'+
+      '<ul class="benefit-list">'+benefitItems+'</ul>'+
+    '</div>'+
+
+    '<div class="msec"><div class="msec-title">👥 Who Pays & Why</div>'+
+      '<div class="payer-cards">'+payerCardsHtml+'</div>'+
+    '</div>'+
+
+    '<div class="msec"><div class="msec-title">💡 Why People Pay For This</div>'+
+      '<div class="why-grid">'+whyPayHtml+'</div>'+
+    '</div>'+
+
+    '<div class="msec"><div class="msec-title">🚀 How To Start This Week</div>'+
+      '<div class="steps">'+stepItems+'</div>'+
+    '</div>';
+
+  document.getElementById('overlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function closeModal(){
+  document.getElementById('overlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+function closeOnBg(e){if(e.target===document.getElementById('overlay'))closeModal();}
+
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal();});
+
+function filter(cat,btn){
+  document.querySelectorAll('.fbtn').forEach(function(b){b.className='fbtn';});
+  btn.classList.add('act-'+cat);
+  document.querySelectorAll('.card').forEach(function(c){c.style.display=(cat==='all'||c.dataset.cat===cat)?'':'none';});
+  ['finance','politics','business','health'].forEach(function(s){
+    var sec=document.getElementById('sec-'+s);
+    var grid=document.getElementById('g-'+s);
+    var show=cat==='all'||cat===s;
+    if(sec)sec.style.display=show?'':'none';
+    if(grid)grid.style.display=show?'':'none';
+  });
+}
+
+var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.querySelectorAll('.mini-fill').forEach(function(f){var w=f.style.width;f.style.width='0';setTimeout(function(){f.style.width=w;},80);});obs.unobserve(e.target);}});},{threshold:0.15});
+document.querySelectorAll('.card').forEach(function(c){obs.observe(c);});
+</script>
+</body>
+</html>
